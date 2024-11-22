@@ -1,5 +1,5 @@
 {
-  "name": "backend1",
+  "name": "webaruhaz_backend",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,7 +9,8 @@
   "author": "Kapitor Balázs",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1",
-    "nodemon": "^3.1.7"
+    "express": "^4.21.0",
+    "nodemon": "^3.1.6",
+    "mysql": "^2.18.1"
   }
 }
