@@ -1,21 +1,5 @@
 <main>
-  <nav>
-    <ul>
-      <li><a>DivatPalota</a></li>
-      <li class="active"><a routerLink="/home">Kezdőlap <i class="bi bi-house-fill"></i></a></li>
-      <li><a href="">Ruhák <i class="fas fa-tshirt"></i></a>
-        <ul class="dropdown">
-          <li><a href="#">Ruházat 1 <i class="bi bi-tag-fill"></i></a></li>
-          <li><a href="#">Ruházat 2 <i class="bi bi-tag-fill"></i></a></li>
-          <li><a href="#">Ruházat 3 <i class="bi bi-tag-fill"></i></a></li>
-        </ul>
-      </li>
-      <li><a routerLink="/akciok">Akciók <i class="bi bi-percent"></i></a></li>
-      <li><a routerLink="/adomanyok">Adományok <i class="bi bi-gift-fill"></i></a></li>
-      <li><a routerLink="/registracio">Bejelentkezés / Regisztráció <i class="bi bi-person-fill"></i></a></li>
-    </ul>
-  </nav>
-
+  <app-navbar></app-navbar>
   <div class="container">
     <div class="top">
       <div class="top-left">
@@ -44,10 +28,4 @@
     </div>
   </div>
 </main>
-
-<footer [ngClass]="{'show': showFooter}">
-  <div class="footer-column">Cím: 1234 Budapest, Divat utca 1. <i class="bi bi-geo-alt-fill"></i><br>
-    Nyitvatartási idő: H-P 9:00 - 18:00 <i class="bi bi-clock-fill"></i></div>
- <div class="footer-column">Kapcsolat: info@divatpalota.hu <i class="bi bi-envelope-fill"></i><br>
-    Telefon: +36 1 234 5678 <i class="bi bi-telephone-fill"></i></div>
-</footer>
+<app-footer></app-footer>
