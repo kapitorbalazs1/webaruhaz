@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   color: #333;
-  background-color: #dfdfdfe5;
+  background-color: #f0f0f0;
   font-family: 'SUSE', sans-serif;
   margin-bottom: 50px;
 }
@@ -21,28 +21,21 @@ main {
 
 /* Egyedi scrollbar design */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(86, 87, 80);
+  background-color: rgb(104, 104, 104);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #777;
+  background-color: #555;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #b3b0b0;
+  background-color: #e0e0e0;
   border-radius: 10px;
-}
-
-.container {
-  width: 100%;
-  height: 100vh;
 }
 
 /* Oldalelrendezés */
@@ -65,7 +58,7 @@ main {
 }
 
 .season{
-   width: 300px;
+  width: 300px;
 }
 
 /* Reszponzivitás beáállításai */

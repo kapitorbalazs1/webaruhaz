@@ -39,6 +39,6 @@ img {
 }
 
 .prev:hover, .next:hover {
-  cursor: url(hover-cursor.png) 0 0, pointer;
+  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
   background-color: #ccc;
 }

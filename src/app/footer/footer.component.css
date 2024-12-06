@@ -1,0 +1,28 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2f2f2f;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000; /* Ensure it's on top */
+  transform: translateY(100%); /* Initially hide it */
+  transition: transform 0.5s ease-in-out;
+}
+
+footer.show {
+  transform: translateY(0); /* Show the footer */
+}
+
+body.scroll-bottom footer {
+  transform: translateY(0);
+}
+
+.footer-column {
+  flex: 1;
+  margin: 0 10px;
+  text-align: center;
+}
