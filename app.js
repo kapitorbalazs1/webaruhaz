@@ -5,8 +5,8 @@ app.use(express.json());
 
 const sequelize = new Sequelize('webaruhaz', 'root', '', {
     host: 'localhost',
-    dialect: 'mysql',
-    logging: false // Disables Sequelize's default SQL logs
+    dialect: 'mariadb',
+    logging: false
 });
 
 sequelize.authenticate()
@@ -19,7 +19,9 @@ sequelize.authenticate()
 
 app.get('/', async (req, res) => {
     try {
-        const [results, metadata] = await sequelize.query('SELECT COUNT(*) AS count FROM ruhak');
+        const results = await sequelize.query('SELECT COUNT(*) AS count FROM ruhak', {
+            type: sequelize.QueryTypes.SELECT
+        });
         const count = results[0].count;
 
         if (count === 0) {
@@ -34,9 +36,11 @@ app.get('/', async (req, res) => {
             });
         }
     } catch (hiba) {
+        console.error('Query Error:', hiba);
         return res.status(500).json({
             status: 'hiba',
             uzenet: 'Hiba a lekérdezés során.',
+            reszletek: hiba.message
         });
     }
 });
