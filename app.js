@@ -1,33 +1,27 @@
 const express = require('express');
-const mysql = require('mysql2');
+const { Sequelize } = require('sequelize');
 const app = express();
 app.use(express.json());
 
-const connection = mysql.createConnection({
+const sequelize = new Sequelize('webaruhaz', 'root', '', {
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'webaruhaz'
+    dialect: 'mysql',
+    logging: false // Disables Sequelize's default SQL logs
 });
 
-connection.connect((err) => {
-    if (err) {
-        console.error('Hiba a kapcsolat létrehozásakor: ' + err.stack);
-        return;
-    }
-    console.log('Sikeres adatbázis kapcsolat!');
-});
+sequelize.authenticate()
+    .then(() => {
+        console.log('Sikeres adatbázis kapcsolat!');
+    })
+    .catch(err => {
+        console.error('Hiba a kapcsolat létrehozásakor:', err);
+    });
 
-app.get('/', (req, res) => {
-    connection.query('SELECT COUNT(*) AS count FROM ruhak', (hiba, eredmenyek) => {
-        if (hiba) {
-            return res.status(500).json({
-                status: 'hiba',
-                uzenet: 'Hiba a lekérdezés során.',
-            });
-        }
+app.get('/', async (req, res) => {
+    try {
+        const [results, metadata] = await sequelize.query('SELECT COUNT(*) AS count FROM ruhak');
+        const count = results[0].count;
 
-        const count = eredmenyek[0].count;
         if (count === 0) {
             return res.status(200).json({
                 status: 'sikeres kapcsolat',
@@ -39,7 +33,12 @@ app.get('/', (req, res) => {
                 uzenet: `A ruhak tábla nem üres, ${count} elem található.`,
             });
         }
-    });
+    } catch (hiba) {
+        return res.status(500).json({
+            status: 'hiba',
+            uzenet: 'Hiba a lekérdezés során.',
+        });
+    }
 });
 
 const port = 3000;
