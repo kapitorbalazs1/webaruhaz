@@ -1,39 +1,44 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const app = express();
 app.use(express.json());
 
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'webaruhaz'
 });
 
-db.connect(err => {
+connection.connect((err) => {
     if (err) {
-        throw err;
+        console.error('Hiba a kapcsolat létrehozásakor: ' + err.stack);
+        return;
     }
-    console.log('MySQL kapcsolat sikeres');
+    console.log('Sikeres adatbázis kapcsolat!');
 });
-
 
 app.get('/', (req, res) => {
-    res.status(200).json({
-        status: 'siker',
-    });
-});
+    connection.query('SELECT COUNT(*) AS count FROM ruhak', (hiba, eredmenyek) => {
+        if (hiba) {
+            return res.status(500).json({
+                status: 'hiba',
+                uzenet: 'Hiba a lekérdezés során.',
+            });
+        }
 
-app.get('/felhasznalok', (req, res) => {
-    const sql = 'SELECT * FROM felhasznalok';
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json({ hiba: err.üzenet });
+        const count = eredmenyek[0].count;
+        if (count === 0) {
+            return res.status(200).json({
+                status: 'sikeres kapcsolat',
+                uzenet: 'A megadott tábla üres',
+            });
+        } else {
+            return res.status(200).json({
+                status: 'siker',
+                uzenet: `A ruhak tábla nem üres, ${count} elem található.`,
+            });
         }
-        if (results.length === 0) {
-            return res.status(200).json({ üzenet: 'A tábla üres' });
-        }
-        res.status(200).json(results);
     });
 });
 
