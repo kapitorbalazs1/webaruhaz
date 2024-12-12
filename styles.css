@@ -1,0 +1,97 @@
+/* Egész oldal beállítása */
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+
+* {
+  cursor: url("assets/cursor.png") 0 0, auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  font-family: 'SUSE', sans-serif;
+  background-attachment: fixed;
+  position: absolute;
+  background-image: url("assets/hatter.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: background-position 1s ease-out;
+  scroll-behavior: smooth;
+  padding-bottom: 45px;
+}
+
+.container {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding-bottom: 45px;
+}
+
+main {
+  flex: 1;
+}
+
+/* Egyedi scrollbar design */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(104, 104, 104);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+/* Oldalelrendezés */
+.top, .bottom {
+  display: flex;
+  justify-content: space-between;
+  height: 50%;
+  font-size: 105%;
+}
+
+.top-left, .top-right, .bottom-left, .bottom-right {
+  width: 50%;
+  font-size: 105%;
+  text-align: center;
+  padding-top: 80px;
+}
+
+.top {
+  margin-bottom: 10px;
+}
+
+.season {
+  width: 300px;
+}
+
+/* Reszponzivitás beáállításai */
+@media only screen and (max-width: 768px) {
+  ul {
+    flex-direction: column;
+  }
+  li {
+    width: 100%;
+  }
+  a {
+    padding: 10px;
+  }
+  footer {
+    flex-direction: column;
+  }
+  .footer-column {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
