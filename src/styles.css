@@ -9,10 +9,25 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  color: #333;
   background-color: #f0f0f0;
   font-family: 'SUSE', sans-serif;
-  margin-bottom: 50px;
+  background-attachment: fixed;
+  position: absolute;
+  background-image: url("assets/hatter.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: background-position 1s ease-out;
+  scroll-behavior: smooth;
+  padding-bottom: 45px;
+}
+
+.container {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding-bottom: 45px;
 }
 
 main {
@@ -25,17 +40,15 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(104, 104, 104);
-  border-radius: 10px;
+  background-color: rgb(83, 83, 83);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  background-color: #383838;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #e0e0e0;
-  border-radius: 10px;
+  background-color: #949494;
 }
 
 /* Oldalelrendezés */
@@ -43,7 +56,9 @@ main {
   display: flex;
   justify-content: space-between;
   height: 50%;
-  font-size: 105%;
+  font-size: 120%;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .top-left, .top-right, .bottom-left, .bottom-right {
@@ -51,13 +66,18 @@ main {
   font-size: 105%;
   text-align: center;
   padding-top: 80px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 15px;
+  background-color: rgba(54, 54, 54, 0.644);
 }
 
 .top {
   margin-bottom: 10px;
 }
 
-.season{
+.season {
   width: 300px;
 }
 
