@@ -57,7 +57,6 @@ main {
   justify-content: space-between;
   height: 50%;
   font-size: 120%;
-  padding: 20px;
   border-radius: 10px;
 }
 
@@ -65,6 +64,7 @@ main {
   width: 50%;
   font-size: 105%;
   text-align: center;
+  align-content: center;
   padding-top: 80px;
   padding: 20px;
   border: 1px solid #ccc;
