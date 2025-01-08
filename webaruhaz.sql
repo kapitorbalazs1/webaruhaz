@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Nov 08. 12:50
+-- Létrehozás ideje: 2025. Jan 08. 13:53
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -31,6 +31,8 @@ USE `webaruhaz`;
 
 CREATE TABLE `felhasznalok` (
   `id` int(11) NOT NULL,
+  `vezeteknev` varchar(50) NOT NULL,
+  `keresztnev` varchar(50) NOT NULL,
   `felhasznalonev` varchar(50) NOT NULL,
   `jelszo` varchar(255) NOT NULL,
   `szuletesi_datum` date NOT NULL,
@@ -38,9 +40,6 @@ CREATE TABLE `felhasznalok` (
   `telefonszam` varchar(15) DEFAULT NULL,
   `lakcim` varchar(255) DEFAULT NULL,
   `nem` varchar(10) NOT NULL,
-  `magassag` int(11) DEFAULT NULL,
-  `derekboseg` int(11) DEFAULT NULL,
-  `vallszelesseg` int(11) DEFAULT NULL,
   `meret_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
