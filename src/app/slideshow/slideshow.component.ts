@@ -6,37 +6,35 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./slideshow.component.css']
 })
 export class SlideshowComponent implements OnInit, OnDestroy {
-  currentSlide: number = 0;
-  slides: { image: string }[] = [
+  currentSlide = 0;
+  slides = [
     { image: 'assets/akciók 1.jpeg' },
     { image: 'assets/akciók 2.jpeg' },
     { image: 'assets/akciók 3.jpeg' }
   ];
   intervalId: any;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.startAutoScroll();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.stopAutoScroll();
   }
 
-  startAutoScroll(): void {
-    this.intervalId = setInterval(() => {
-      this.nextSlide();
-    }, 3000);
+  startAutoScroll() {
+    this.intervalId = setInterval(() => this.nextSlide(), 3000);
   }
 
-  stopAutoScroll(): void {
+  stopAutoScroll() {
     clearInterval(this.intervalId);
   }
 
-  nextSlide(): void {
+  nextSlide() {
     this.currentSlide = (this.currentSlide + 1) % this.slides.length;
   }
 
-  prevSlide(): void {
+  prevSlide() {
     this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
   }
 }
