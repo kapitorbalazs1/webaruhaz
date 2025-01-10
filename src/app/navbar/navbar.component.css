@@ -1,19 +1,14 @@
-/* Navigációs sáv design */
 nav {
-  background-color: #444;
+  background-color: #444; 
   border-radius: 10px;
-  padding: 0;
 }
 
 nav ul {
-  list-style-type: none;
+  list-style: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-}
-
-nav li {
-  float: left;
+  display: flex;
+  align-items: center;
 }
 
 .cim {
@@ -22,8 +17,9 @@ nav li {
   cursor: default;
 }
 
-nav li:last-child {
-  float: right;
+.jobbra {
+  margin-left: auto;
+  display: flex;
 }
 
 nav a {
@@ -38,64 +34,53 @@ nav a {
 
 nav a:hover {
   background-color: rgb(143, 145, 143);
-  border-radius: 10px;
   cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
   transform: scale(1.05);
+}
+
+nav li {
+  position: relative;
+}
+
+nav li:hover .dropdown {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 0.5s ease;
 }
 
 .dropdown {
   position: absolute;
   visibility: hidden;
-  height: 0;
   background-color: #444;
   border-radius: 10px;
   padding: 0;
   z-index: 1000;
   opacity: 0;
-  transition: visibility 0s linear 0.5s, height 0.5s ease, opacity 0.5s ease;
-}
-
-nav li:hover .dropdown {
-  visibility: visible;
-  height: auto;
-  opacity: 1;
-  transition: visibility 0s linear 0s, height 0.5s ease, opacity 0.5s ease;
+  transition: visibility 0s linear 0.5s, opacity 0.5s ease;
+  top: 100%;
+  flex-direction: column;
+  width: 100%;
 }
 
 .dropdown li {
-  float: none;
+  display: block;
 }
 
 .dropdown a {
-  padding: 10px;
+  padding: 8px 12px;
   margin: 0;
   width: 100%;
   font-weight: normal;
   text-transform: none;
   line-height: 1.5;
-  display: flex;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .dropdown a i {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .dropdown li:hover a {
   cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
   background-color: rgb(143, 145, 143);
-  border-radius: 10px;
-  transform: scale(1.05);
-}
-
-.dropdown a:hover {
-  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
-  background-color: rgb(143, 145, 143);
-  transform: scale(1.05);
-}
-
-.active {
-  background-color: #6b6a6a;
-  border-radius: 10px;
-  cursor: pointer;
 }
