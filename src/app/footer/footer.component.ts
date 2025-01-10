@@ -13,12 +13,7 @@ export class FooterComponent {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
-    // Check if the user has scrolled to the bottom of the page with a slight buffer
-    if (scrollTop + windowHeight >= documentHeight - 5) {
-      this.showFooter = true;
-    } else {
-      this.showFooter = false;
-    }
+
+    this.showFooter = scrollTop + windowHeight >= documentHeight - 5;
   }
 }

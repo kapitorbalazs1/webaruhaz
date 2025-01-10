@@ -8,13 +8,13 @@ footer {
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  z-index: 1000; /* Ensure it's on top */
-  transform: translateY(100%); /* Initially hide it */
+  z-index: 1000;
+  transform: translateY(100%);
   transition: transform 0.5s ease-in-out;
 }
 
 footer.show {
-  transform: translateY(0); /* Show the footer */
+  transform: translateY(0);
 }
 
 body.scroll-bottom footer {
