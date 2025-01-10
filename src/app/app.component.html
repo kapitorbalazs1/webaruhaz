@@ -1,15 +1,17 @@
+<app-navbar></app-navbar>
 <main>
-  <app-navbar></app-navbar>
-  <div class="container">
+  <router-outlet></router-outlet>
+
+  <div class="container" *ngIf="isHomePage()">
     <div class="top">
       <div class="top-left">
-        <p>Üdvözöljük a DivatPalota webáruházban! Célunk, hogy a legfrissebb trendeket és stílusos ruhákat kínáljuk minden divatkedvelő számára.</p>
-        <p>Szakértő csapatunk mindig készen áll, hogy segítsen Önnek megtalálni a tökéletes darabot. Fedezze fel velünk a divat világát!</p>
+        <p>Üdvözlünk a DivatPalota webáruházban! Itt mindig a legújabb trendeket találod, és segítünk, hogy a stílusod mindig tökéletes legyen.</p>
+        <p>Ha bármiben tanácsra van szükséged, fordulj hozzánk bizalommal – csapatunk örömmel segít neked!</p>
       </div>
       <div class="top-right">
-        Információk ruháinkról
-        <p>Az akciók a ruhákra naponta megtalálhatóak az oldalunkon.</p>
-        <img src="assets/négyévszak.jpg" class="season">
+        <h2>Információk ruháinkról</h2>
+        <p>Akcióink naponta frissülnek, nézz vissza gyakran, hogy ne maradj le a legjobb ajánlatokról!</p>
+        <img src="assets/négyévszak.jpg" alt="Divatos ruhák minden évszakra" class="season">
       </div>
     </div>
     
@@ -18,11 +20,12 @@
         <app-slideshow></app-slideshow>
       </div>
       <div class="bottom-right">
-        <p>Üdvözöljük az Adományozás oldalunkon! Célunk, hogy támogassuk a rászorulókat és közösségi projekteket.</p>
+        <h2>Csatlakozz az Adományozás programunkhoz!</h2>
+        <p>Segítsünk együtt a rászorulóknak. Íme néhány mód, ahogyan te is hozzájárulhatsz:</p>
         <ul>
-          <li>Anyagi támogatás: Bármilyen összegű adományt örömmel fogadunk.</li>
-          <li>Termékadomány: Ruha, játék vagy egyéb szükséges dolgok adományozása is segíthet.</li>
-          <li>Önkéntesség: Csatlakozhat csapatunkhoz.</li>
+          <li><strong>Anyagi támogatás:</strong> Minden kis összeg számít, és óriási segítség lehet.</li>
+          <li><strong>Termékadomány:</strong> Ruhák, játékok, vagy bármilyen hasznos dolog örömmel fogadott.</li>
+          <li><strong>Önkéntesség:</strong> Légy a csapatunk tagja, és vegyél részt közösségi projektjeinkben.</li>
         </ul>
       </div>
     </div>

@@ -8,21 +8,21 @@ describe('AppComponent', () => {
     declarations: [AppComponent]
   }));
 
-  it('should create the app', () => {
+  it('should create the application', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'webaruhaz_frontend'`, () => {
+  it(`should have the title 'Online Store Frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
   });
 
-  it('should render title', () => {
+  it('should render the title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('webaruhaz_frontend app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('The Online Store Frontend is running!');
   });
 });
