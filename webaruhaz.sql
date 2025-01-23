@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 22. 08:58
+-- Létrehozás ideje: 2025. Jan 23. 19:57
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -56,10 +56,10 @@ INSERT INTO `felhasznalok` (`id`, `vezeteknev`, `keresztnev`, `felhasznalonev`, 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `ruhak`
+-- Tábla szerkezet ehhez a táblához `polok`
 --
 
-CREATE TABLE `ruhak` (
+CREATE TABLE `polok` (
   `id` int(11) NOT NULL,
   `ar` int(11) NOT NULL,
   `meret` varchar(10) NOT NULL,
@@ -72,17 +72,17 @@ CREATE TABLE `ruhak` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `ruhak`
+-- A tábla adatainak kiíratása `polok`
 --
 
-INSERT INTO `ruhak` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `nem`, `kep_url`) VALUES
+INSERT INTO `polok` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `nem`, `kep_url`) VALUES
 (1, 5000, 'M', 'Pamut', 'Nike', 'Kék', 'Kényelmes pamut póló', 'Férfi', './src/assets/polo1.jpg'),
 (2, 6000, 'L', 'Pamut', 'Adidas', 'Zöld', 'Sportos pamut póló', 'Férfi', './src/assets/polo2.jpg'),
 (3, 4500, 'S', 'Pamut', 'Puma', 'Fekete', 'Klasszikus pamut póló', 'Férfi', './src/assets/polo3.jpg'),
 (4, 7000, 'M', 'Poliészter', 'Reebok', 'Fehér', 'Futó póló', 'Férfi', './src/assets/polo4.jpg'),
 (5, 8000, 'XL', 'Pamut', 'Under Armour', 'Szürke', 'Kényelmes edző póló', 'Férfi', './src/assets/polo5.jpg'),
-(6, 5500, 'M', 'Pamut', 'H&M', 'Kék', 'Divatos pamut póló', 'Női', './src/assets/polo6.jpg'),
-(7, 6500, 'L', 'Pamut', 'Zara', 'Piros', 'Stílusos pamut póló', 'Női', './src/assets/polo7.jpg'),
+(6, 5500, 'M', 'Pamut', 'H&M', 'Kék', 'Divatos pamut póló', 'Férfi', './src/assets/polo6.jpg'),
+(7, 6500, 'L', 'Pamut', 'Zara', 'Piros', 'Stílusos pamut póló', 'Férfi', './src/assets/polo7.jpg'),
 (8, 4800, 'S', 'Pamut', 'Mango', 'Fehér', 'Kényelmes női póló', 'Női', './src/assets/polo8.jpg'),
 (9, 7200, 'M', 'Poliészter', 'Nike', 'Fekete', 'Futó póló női', 'Női', './src/assets/polo9.jpg'),
 (10, 7500, 'XL', 'Pamut', 'Adidas', 'Zöld', 'Sportos női póló', 'Női', './src/assets/polo10.jpg'),
@@ -123,9 +123,9 @@ ALTER TABLE `felhasznalok`
   ADD KEY `meret_id` (`meret_id`);
 
 --
--- A tábla indexei `ruhak`
+-- A tábla indexei `polok`
 --
-ALTER TABLE `ruhak`
+ALTER TABLE `polok`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -146,9 +146,9 @@ ALTER TABLE `felhasznalok`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT a táblához `ruhak`
+-- AUTO_INCREMENT a táblához `polok`
 --
-ALTER TABLE `ruhak`
+ALTER TABLE `polok`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
@@ -171,7 +171,7 @@ ALTER TABLE `felhasznalok`
 -- Megkötések a táblához `ruha_meretek`
 --
 ALTER TABLE `ruha_meretek`
-  ADD CONSTRAINT `ruha_meretek_ibfk_1` FOREIGN KEY (`ruha_id`) REFERENCES `ruhak` (`id`);
+  ADD CONSTRAINT `ruha_meretek_ibfk_1` FOREIGN KEY (`ruha_id`) REFERENCES `polok` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
