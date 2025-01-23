@@ -115,11 +115,11 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Route: Fetch Clothing Items
-app.get('/api/ruhak', async (req, res) => {
+app.get('/api/polok', async (req, res) => {
     try {
         // Fetch all clothing items from the database
         const clothingItems = await sequelize.query(
-            `SELECT * FROM ruhak`,
+            `SELECT * FROM polok`,
             {
                 type: sequelize.QueryTypes.SELECT
             }
