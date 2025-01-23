@@ -28,11 +28,11 @@ sequelize.authenticate()
 
 // Route: User Registration
 app.post('/api/register', async (req, res) => {
-    const { username, password, birthDate, email, phone, address, gender, lastName, firstName } = req.body;
+    const { username, password, birthDate, email, phone, address, gender, lastName, firstName, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
 
     // Basic input validation
-    if (!username || !password || !email) {
-        return res.status(400).json({ error: 'Hiányosan kitöltött mezők! A felhasználónév, jelszó és email kötelező.' });
+    if (!username || !password || !email || !biztonsagi_kerdes || !biztonsagi_valasz) {
+        return res.status(400).json({ error: 'Hiányosan kitöltött mezők! A felhasználónév, jelszó, email, biztonsági kérdés és válasz kötelező.' });
     }
 
     // Email format validation
@@ -43,7 +43,7 @@ app.post('/api/register', async (req, res) => {
 
     try {
         // Check if username or email already exists
-        const [existingUser] = await sequelize.query(
+        const [existingUser ] = await sequelize.query(
             `SELECT * FROM felhasznalok WHERE felhasznalonev = ? OR email_cim = ?`,
             {
                 replacements: [username, email],
@@ -51,7 +51,7 @@ app.post('/api/register', async (req, res) => {
             }
         );
 
-        if (existingUser) {
+        if (existingUser ) {
             return res.status(409).json({ error: 'A felhasználónév vagy az email cím már használatban van.' });
         }
 
@@ -61,10 +61,10 @@ app.post('/api/register', async (req, res) => {
         // Insert new user into the database
         const result = await sequelize.query(
             `INSERT INTO felhasznalok 
-            (felhasznalonev, jelszo, szuletesi_datum, email_cim, telefonszam, lakcim, nem, vezeteknev, keresztnev) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (felhasznalonev, jelszo, szuletesi_datum, email_cim, telefonszam, lakcim, nem, vezeteknev, keresztnev, biztonsagi_kerdes, biztonsagi_valasz) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             {
-                replacements: [username, hashedPassword, birthDate, email, phone, address, gender, lastName, firstName],
+                replacements: [username, hashedPassword, birthDate, email, phone, address, gender, lastName, firstName, biztonsagi_kerdes, biztonsagi_valasz],
                 type: sequelize.QueryTypes.INSERT
             }
         );
@@ -111,6 +111,71 @@ app.post('/api/login', async (req, res) => {
     } catch (error) {
         console.error('Hiba a bejelentkezés során:', error.message);
         res.status(500).json({ error: 'Váratlan hiba történt a bejelentkezés során.' });
+    }
+});
+
+app.post('/api/forgot-password', async (req, res) => {
+    const { email, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
+
+    // Validate input
+    if (!email || !biztonsagi_kerdes || !biztonsagi_valasz) {
+        return res.status(400).json({ message: 'Kérjük, töltse ki az összes mezőt.' });
+    }
+
+    try {
+        // Fetch user by email
+        const [user] = await sequelize.query(
+            `SELECT * FROM felhasznalok WHERE email_cim = ?`,
+            {
+                replacements: [email],
+                type: sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'Felhasználó nem található.' });
+        }
+
+        // Check security question and answer
+        if (user.biztonsagi_kerdes !== biztonsagi_kerdes || user.biztonsagi_valasz !== biztonsagi_valasz) {
+            return res.status(401).json({ message: 'Hibás biztonsági kérdés vagy válasz.' });
+        }
+
+        // Here you would typically send an email with a password reset link
+        // For simplicity, we will just return a success message
+        res.status(200).json({ message: 'Ellenőrizze az email fiókját a jelszó visszaállításához!' });
+    } catch (error) {
+        console.error('Hiba a jelszó visszaállítása során:', error.message);
+        res.status(500).json({ message: 'Váratlan hiba történt a jelszó visszaállítása során.' });
+    }
+});
+
+// Route: Change Password
+app.post('/api/change-password', async (req, res) => {
+    const { email, newPassword } = req.body;
+
+    // Validate input
+    if (!email || !newPassword) {
+        return res.status(400).json({ message: 'Kérjük, töltse ki az összes mezőt.' });
+    }
+
+    try {
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update the user's password in the database
+        await sequelize.query(
+            `UPDATE felhasznalok SET jelszo = ? WHERE email_cim = ?`,
+            {
+                replacements: [hashedPassword, email],
+                type: sequelize.QueryTypes.UPDATE
+            }
+        );
+
+        res.status(200).json({ message: 'A jelszó sikeresen módosítva!' });
+    } catch (error) {
+        console.error('Hiba a jelszó módosítása során:', error.message);
+        res.status(500).json({ message: 'Váratlan hiba történt a jelszó módosítása során.' });
     }
 });
 
