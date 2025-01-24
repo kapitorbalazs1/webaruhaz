@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 23. 19:57
+-- Létrehozás ideje: 2025. Jan 24. 12:52
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `felhasznalok` (
   `lakcim` varchar(255) DEFAULT NULL,
   `nem` varchar(10) NOT NULL,
   `biztonsagi_kerdes` varchar(100) NOT NULL,
-  `biztosagi_valasz` varchar(100) NOT NULL,
+  `biztonsagi_valasz` varchar(100) DEFAULT NULL,
   `meret_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -49,11 +49,12 @@ CREATE TABLE `felhasznalok` (
 -- A tábla adatainak kiíratása `felhasznalok`
 --
 
-INSERT INTO `felhasznalok` (`id`, `vezeteknev`, `keresztnev`, `felhasznalonev`, `jelszo`, `szuletesi_datum`, `email_cim`, `telefonszam`, `lakcim`, `nem`, `meret_id`) VALUES
-(9, 'Kapitor', 'Balázs', 'kbalazs', '$2b$10$CiZmsPvXSI0sbBs5wDd/U.xp3p.1QWeZmeh.hAfEMV8kKvDVzuZZe', '2005-06-04', 'kapitorb@gmail.com', '06701234567', '5', 'ferfi', NULL),
-(10, 'teszt', '123', 'teszt', '$2b$10$a80lkjLgZEz9t0QPNOiTrOqZ7/NpFzPIudtZBuoGnQswdgT4YtV.C', '0006-07-08', 'teszt@gmail.com', '06201234567', '5', 'ferfi', NULL),
-(11, 'Kapitor', 'Balázs', 'kbalazs1', '$2b$10$KmDW7Fqg/JibSDUz1HNWjuHx/azd9iyWCkovFwl71wJ89tDoeTo4i', '0006-07-08', 'teszt1@gmail.com', '06701234567', '5', 'ferfi', NULL),
-(12, 'Kapitor', 'Balázs', 'kbalazs2', '$2b$10$KEG8hnxT5EjIuZXRCTGbj.g0jzLdsD/csMwgLTxd/l81TL27MyeCG', '0005-06-07', 'kapitorb1@gmail.com', '06701234567', '5', 'ferfi', NULL);
+INSERT INTO `felhasznalok` (`id`, `vezeteknev`, `keresztnev`, `felhasznalonev`, `jelszo`, `szuletesi_datum`, `email_cim`, `telefonszam`, `lakcim`, `nem`, `biztonsagi_kerdes`, `biztonsagi_valasz`, `meret_id`) VALUES
+(9, 'Kapitor', 'Balázs', 'kbalazs', '$2b$10$CiZmsPvXSI0sbBs5wDd/U.xp3p.1QWeZmeh.hAfEMV8kKvDVzuZZe', '2005-06-04', 'kapitorb@gmail.com', '06701234567', '5', 'ferfi', '', '', NULL),
+(10, 'teszt', '123', 'teszt', '$2b$10$a80lkjLgZEz9t0QPNOiTrOqZ7/NpFzPIudtZBuoGnQswdgT4YtV.C', '0006-07-08', 'teszt@gmail.com', '06201234567', '5', 'ferfi', '', '', NULL),
+(11, 'Kapitor', 'Balázs', 'kbalazs1', '$2b$10$KmDW7Fqg/JibSDUz1HNWjuHx/azd9iyWCkovFwl71wJ89tDoeTo4i', '0006-07-08', 'teszt1@gmail.com', '06701234567', '5', 'ferfi', '', '', NULL),
+(12, 'Kapitor', 'Balázs', 'kbalazs2', '$2b$10$KEG8hnxT5EjIuZXRCTGbj.g0jzLdsD/csMwgLTxd/l81TL27MyeCG', '0005-06-07', 'kapitorb1@gmail.com', '06701234567', '5', 'ferfi', '', '', NULL),
+(13, 'teszt2', '123', 'teszt2', '$2b$10$PPxkxMNl407dVquNjvFXjuJ4YARJuHG13H1YZS8v4q8uqYP8Bc1bO', '0006-07-08', 'teszt2@gmail.com', '06701234567', '5', 'ferfi', '12', '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -101,6 +102,10 @@ INSERT INTO `polok` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `n
 
 -- --------------------------------------------------------
 
+--
+-- Tábla szerkezet ehhez a táblához `pulcsik`
+--
+
 CREATE TABLE `pulcsik` (
   `id` int(11) NOT NULL,
   `ar` int(11) NOT NULL,
@@ -139,6 +144,8 @@ INSERT INTO `pulcsik` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, 
 (19, 14500, 'M', 'Poliészter', 'Adidas', 'Piros', 'Futó pulóver női', 'Női', './src/assets/pulcsik/pulcsi19.jpg'),
 (20, 15500, 'XL', 'Pamut', 'Puma', 'Szürke', 'Sportos női pulóver', 'Női', './src/assets/pulcsik/pulcsi20.jpg');
 
+-- --------------------------------------------------------
+
 --
 -- Tábla szerkezet ehhez a táblához `ruha_meretek`
 --
@@ -169,7 +176,7 @@ ALTER TABLE `polok`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `polok`
+-- A tábla indexei `pulcsik`
 --
 ALTER TABLE `pulcsik`
   ADD PRIMARY KEY (`id`);
@@ -189,7 +196,7 @@ ALTER TABLE `ruha_meretek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT a táblához `polok`
