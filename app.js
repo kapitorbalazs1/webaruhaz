@@ -1,72 +1,66 @@
 const express = require('express');
 const cors = require('cors');
-const { Sequelize, DataTypes, Op } = require('sequelize'); // Az Op importálása
-const User = require('./models/user'); // Import the User model
+const { Sequelize } = require('sequelize');
+const Felhasznalo = require('./models/user');
 
-// Initialize Express app
-const app = express();
+const alkalmazas = express();
 
-// Middleware for handling CORS and JSON parsing
-app.use(cors());
-app.use(express.json());
+alkalmazas.use(cors());
+alkalmazas.use(express.json());
 
-// Configure Sequelize for database connection
-const sequelize = new Sequelize('webaruhaz', 'root', '', {
+const adatbazis = new Sequelize('webaruhaz', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false
 });
 
-// Test database connection
-sequelize.authenticate()
+adatbazis.authenticate()
     .then(() => {
-        console.log('Sikeres adatbázis kapcsolat!');
+        console.log('✅ Sikeresen csatlakoztunk az adatbázishoz!');
+        return adatbazis.sync();
     })
-    .catch(err => {
-        console.error('Hiba az adatbázis kapcsolat létrehozásakor:', err.message);
-    });
+    .then(() => {
+        console.log('📦 Adatbázis sikeresen szinkronizálva!');
+    })
+    .catch(hiba => {
+        console.error('❌ Hiba történt az adatbázis kapcsolat vagy szinkronizálás során:', hiba);
+        process.exit(1);
+    }
+);
 
-// Import routes
-const authRoutes = require('./routes/auth')(User ); // Pass the User model
-const passwordRoutes = require('./routes/password')(User ); // Pass the User model
+const authUtvonalak = require('./routes/auth')(Felhasznalo, adatbazis);
+const jelszoUtvonalak = require('./routes/password')(Felhasznalo, adatbazis);
 
-// Use routes
-app.use('/api', authRoutes);
-app.use('/api', passwordRoutes);
+alkalmazas.use('/api', authUtvonalak);
+alkalmazas.use('/api', jelszoUtvonalak);
 
-// Route: Fetch Clothing Items
-app.get('/api/polok', async (req, res) => {
+alkalmazas.get('/api/ruhak', async (keres, valasz) => {
     try {
-        const clothingItems = await sequelize.query(
-            `SELECT * FROM polok`,
-            {
-                type: sequelize.QueryTypes.SELECT
-            }
-        );
-        res.status(200).json(clothingItems);
-    } catch (error) {
-        console.error('Hiba a ruhák lekérdezése során:', error.message);
-        res.status(500).json({ error: 'Nem sikerült lekérdezni a ruhák listáját. Próbáld újra később!' });
+        const [polok, pulcsik, ingek, kabatok, nadragok] = await Promise.all([
+            adatbazis.query('SELECT * FROM polok', { type: Sequelize.QueryTypes.SELECT }),
+            adatbazis.query('SELECT * FROM pulcsik', { type: Sequelize.QueryTypes.SELECT }),
+            adatbazis.query('SELECT * FROM ingek', { type: Sequelize.QueryTypes.SELECT }),
+            adatbazis.query('SELECT * FROM kabatok', { type: Sequelize.QueryTypes.SELECT }),
+            adatbazis.query('SELECT * FROM nadragok', { type: Sequelize.QueryTypes.SELECT })
+        ]);
+
+        const ruhakLista = {
+            Polok: polok,
+            Pulcsik: pulcsik,
+            Ingek: ingek,
+            Kabatok: kabatok,
+            Nadragok: nadragok
+        };
+
+        valasz.status(200).json(ruhakLista);
+    } catch (hiba) {
+        console.error('⚠️ Hiba történt a ruhák lekérése közben:', hiba.message);
+        valasz.status(500).json({ hiba: 'Nem sikerült lekérdezni a ruhák listáját. Próbáld újra később!' });
     }
 });
 
-app.get('/api/pulcsik', async (req, res) => {
-    try {
-        const PulloverItems = await sequelize.query(
-            `SELECT * FROM pulcsik`,
-            {
-                type: sequelize.QueryTypes.SELECT
-            }
-        );
-        res.status(200).json(PulloverItems);
-    } catch (error) {
-        console.error('Hiba a ruhák lekérdezése során:', error.message);
-        res.status(500).json({ error: 'Nem sikerült lekérdezni a ruhák listáját. Próbáld újra később!' });
-    }
-});
-
-// Start the server
 const port = 3000;
-app.listen(port, () => {
-    console.log(`A szerver fut a ${port}-es porton. Látogasd meg a http://localhost:${port} címet!`);
+alkalmazas.listen(port, () => {
+    console.log(`🚀 A szerver elindult a ${port}-es porton!`);
+    console.log(`🔗 Nyisd meg: http://localhost:${port}`);
 });

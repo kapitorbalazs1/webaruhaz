@@ -1,14 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Initialize Sequelize
 const sequelize = new Sequelize('webaruhaz', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false
 });
 
-// Define the User model
-const User = sequelize.define('User ', { // Eltávolítva a felesleges szóköz
+const User = sequelize.define('User', {
     felhasznalonev: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -56,9 +54,8 @@ const User = sequelize.define('User ', { // Eltávolítva a felesleges szóköz
         allowNull: false
     }
 }, {
-    tableName: 'felhasznalok', // Specify the table name
-    timestamps: false // Disable timestamps if not needed
+    tableName: 'felhasznalok',
+    timestamps: false
 });
 
-// Export the User model
 module.exports = User;

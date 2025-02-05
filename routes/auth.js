@@ -1,84 +1,103 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { Op } = require('sequelize'); // Az Op importálása
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
-// User Registration
-module.exports = (User ) => {
-    router.post('/register', async (req, res) => {
-        const { username, password, birthDate, email, phone, address, gender, lastName, firstName, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
-
-        if (!username || !password || !email || !biztonsagi_kerdes || !biztonsagi_valasz) {
-            return res.status(400).json({ error: 'Hiányosan kitöltött mezők!' });
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ error: 'Az email cím formátuma nem megfelelő!' });
-        }
-
+module.exports = (Felhasznalo) => {
+    router.post('/regisztracio', async (req, res) => {
         try {
-            const existingUser  = await User.findOne({
+            const { felhasznalonev, jelszo, szuletesi_datum, email_cim, telefonszam, lakcim, nem, vezeteknev, keresztnev, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
+
+            // Validate required fields
+            if (!felhasznalonev || !jelszo || !email_cim || !biztonsagi_kerdes || !biztonsagi_valasz) {
+                console.error('Missing fields:', req.body);
+                return res.status(400).json({ hiba: 'Hiányosan kitöltött mezők!' });
+            }
+
+            // Validate email format
+            const emailMinta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailMinta.test(email_cim)) {
+                console.error('Invalid email format:', email_cim);
+                return res.status(400).json({ hiba: 'Az email cím formátuma nem megfelelő!' });
+            }
+
+            // Check if username or email already exists
+            const letezoFelhasznalo = await Felhasznalo.findOne({
                 where: {
                     [Op.or]: [
-                        { felhasznalonev: username },
-                        { email_cim: email }
+                        { felhasznalonev },
+                        { email_cim }
                     ]
                 }
             });
 
-            if (existingUser ) {
-                return res.status(409).json({ error: 'A felhasználónév vagy az email cím már használatban van.' });
+            if (letezoFelhasznalo) {
+                console.error('User already exists:', letezoFelhasznalo);
+                return res.status(409).json({ hiba: 'A felhasználónév vagy az email cím már használatban van.' });
             }
 
-            const hashedPassword = await bcrypt.hash(password, 10);
+            // Hash the password
+            const titkositottJelszo = await bcrypt.hash(jelszo, 10);
 
-            const newUser  = await User.create({
-                felhasznalonev: username,
-                jelszo: hashedPassword,
-                szuletesi_datum: birthDate,
-                email_cim: email,
-                telefonszam: phone,
-                lakcim: address,
-                nem: gender,
-                vezeteknev: lastName,
-                keresztnev: firstName,
-                biztonsagi_kerdes: biztonsagi_kerdes,
-                biztonsagi_valasz: biztonsagi_valasz
+            // Create new user
+            const ujFelhasznalo = await Felhasznalo.create({
+                felhasznalonev,
+                jelszo: titkositottJelszo,
+                szuletesi_datum,
+                email_cim,
+                telefonszam,
+                lakcim,
+                nem,
+                vezeteknev,
+                keresztnev,
+                biztonsagi_kerdes,
+                biztonsagi_valasz
             });
 
-            res.status(201).json({ message: 'Felhasználó sikeresen regisztrálva!', userId: newUser .id });
-        } catch (error) {
-            console.error('Hiba a regisztráció során:', error.message);
-            res.status(500).json({ error: 'Váratlan hiba történt a regisztráció során.' });
+            console.log('New user created:', ujFelhasznalo);
+            res.status(201).json({ uzenet: 'Sikeres regisztráció!', felhasznaloAzonosito: ujFelhasznalo.id });
+        } catch (hiba) {
+            console.error('Error during registration:', hiba);
+            res.status(500).json({ hiba: 'Váratlan hiba történt a regisztráció során.' });
         }
     });
 
-    // User Login
-    router.post('/login', async (req, res) => {
-        const { username, password } = req.body;
+    router.post('/bejelentkezes', async (req, res) => {
+        const { azonosito, jelszo } = req.body;
 
-        if (!username || !password) {
-            return res.status(400).json({ error: 'A felhasználónév és a jelszó megadása kötelező!' });
+        // Validate required fields
+        if (!azonosito || !jelszo) {
+            return res.status(400).json({ hiba: 'Felhasználónév vagy email és jelszó megadása kötelező!' });
         }
 
         try {
-            const user = await User.findOne({ where: { felhasznalonev: username } });
+            // Find user by username or email
+            const felhasznalo = await Felhasznalo.findOne({
+                where: {
+                    [Op.or]: [
+                        { felhasznalonev: azonosito },
+                        { email_cim: azonosito }
+                    ]
+                }
+            });
 
-            if (!user) {
-                return res.status(401).json({ error: 'Hibás felhasználónév vagy jelszó!' });
+            // Check if user exists
+            if (!felhasznalo) {
+                return res.status(404).json({ hiba: 'Felhasználónév nem található!' });
             }
 
-            const isPasswordValid = await bcrypt.compare(password, user.jelszo);
-            if (!isPasswordValid) {
-                return res.status(401).json({ error: 'Hibás felhasználónév vagy jelszó!' });
+            // Compare passwords
+            const jelszoHelyes = await bcrypt.compare(jelszo, felhasznalo.jelszo);
+            if (!jelszoHelyes) {
+                return res.status(401).json({ hiba: 'Helytelen jelszó!' });
             }
 
-            res.status(200).json({ message: 'Bejelentkezés sikeres!', user: { id: user.id, username: user.felhasznalonev, email: user.email_cim } });
-        } catch (error) {
-            console.error('Hiba a bejelentkezés során:', error.message);
-            res.status(500).json({ error: 'Váratlan hiba történt a bejelentkezés során.' });
+            // Successful login
+            res.status(200).json({ uzenet: 'Sikeres bejelentkezés!', felhasznalo: felhasznalo });
+        } catch (hiba) {
+            console.error('Error during login:', hiba);
+            res.status(500).json({ hiba: 'Váratlan hiba történt a bejelentkezés során.' });
         }
     });
 

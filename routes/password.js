@@ -1,54 +1,78 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
-// Forgot Password
-module.exports = (User ) => {
-    router.post('/forgot-password', async (req, res) => {
-        const { email, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
+module.exports = (Felhasznalo) => {
+  router.post('/elfelejtett-jelszo', async (req, res) => {
+    const { azonosito, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
 
-        if (!email || !biztonsagi_kerdes || !biztonsagi_valasz) {
-            return res.status(400).json({ message: 'Kérjük, töltse ki az összes mezőt.' });
+    if (!azonosito || !biztonsagi_kerdes || !biztonsagi_valasz) {
+      return res.status(400).json({ uzenet: 'Minden mezőt ki kell tölteni!' });
+    }
+
+    try {
+      const felhasznalo = await Felhasznalo.findOne({
+        where: {
+          [Op.or]: [
+            { email_cim: azonosito },
+            { felhasznalonev: azonosito }
+          ]
         }
+      });
 
-        try {
-            const user = await User.findOne({ where: { email_cim: email } });
+      if (!felhasznalo) {
+        return res.status(404).json({ uzenet: 'Nem található ilyen felhasználó.' });
+      }
 
-            if (!user) {
-                return res.status(404).json({ message: 'Felhasználó nem található.' });
-            }
+      if (
+        felhasznalo.biztonsagi_kerdes.toLowerCase() !== biztonsagi_kerdes.toLowerCase() ||
+        felhasznalo.biztonsagi_valasz.toLowerCase() !== biztonsagi_valasz.toLowerCase()
+      ) {
+        return res.status(401).json({ uzenet: 'Hibás biztonsági kérdés vagy válasz.' });
+      }
 
-            if (user.biztonsagi_kerdes !== biztonsagi_kerdes || user.biztonsagi_valasz !== biztonsagi_valasz) {
-                return res.status(401).json({ message: 'Hibás biztonsági kérdés vagy válasz.' });
-            }
+      res.status(200).json({ uzenet: '✅ Sikeres azonosítás! Most már megváltoztathatod a jelszavadat.' });
+    } catch (hiba) {
+      console.error('❌ Hiba történt a jelszó visszaállításakor:', hiba.message);
+      res.status(500).json({ uzenet: 'Váratlan hiba történt.' });
+    }
+  });
 
-            res.status(200).json({ message: 'Ellenőrizze az email fiókját a jelszó visszaállításához!' });
-        } catch (error) {
-            console.error('Hiba a jelszó visszaállítása során:', error.message);
-            res.status(500).json({ message: 'Váratlan hiba történt a jelszó visszaállítása során.' });
+  router.post('/jelszo-modositas', async (req, res) => {
+    const { azonosito, jelszo } = req.body;
+
+    if (!azonosito || !jelszo) {
+      return res.status(400).json({ uzenet: 'Minden mezőt ki kell tölteni!' });
+    }
+
+    const jelszoMinta = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
+    if (!jelszoMinta.test(jelszo)) {
+      return res.status(400).json({ uzenet: 'A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell kis- és nagybetűket, számot, és speciális karaktert (pl. @$!%*?&).' });
+    }
+
+    try {
+      const titkositottJelszo = await bcrypt.hash(jelszo, 10);
+
+      await Felhasznalo.update(
+        { jelszo: titkositottJelszo },
+        {
+          where: {
+            [Op.or]: [
+              { email_cim: azonosito },
+              { felhasznalonev: azonosito }
+            ]
+          }
         }
-    });
+      );
 
-    // Change Password
-    router.post('/change-password', async (req, res) => {
-        const { email, newPassword } = req.body;
+      res.status(200).json({ uzenet: '✅ A jelszó sikeresen módosítva!' });
+    } catch (hiba) {
+      console.error('❌ Hiba történt a jelszó módosításakor:', hiba.message);
+      res.status(500).json({ uzenet: 'Váratlan hiba történt.' });
+    }
+  });
 
-        if (!email || !newPassword) {
-            return res.status(400).json({ message: 'Kérjük, töltse ki az összes mezőt.' });
-        }
-
-        try {
-            const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-            await User.update({ jelszo: hashedPassword }, { where: { email_cim: email } });
-
-            res.status(200).json({ message: 'A jelszó sikeresen módosítva!' });
-        } catch (error) {
-            console.error('Hiba a jelszó módosítása során:', error.message);
-            res.status(500).json({ message: 'Váratlan hiba történt a jelszó módosítása során.' });
-        }
-    });
-
-    return router;
+  return router;
 };
