@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 29. 17:00
+-- Létrehozás ideje: 2025. Feb 11. 18:21
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -132,7 +132,7 @@ INSERT INTO `kabatok` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, 
 (10, 15990, 'M', 'Nylon', 'Adidas', 'Szürke', 'Könnyű szürke nylon kabát', 'Férfi', './src/assets/kabatok/kabat10.jpg'),
 (11, 23990, 'L', 'Poliészter', 'Puma', 'Piros', 'Sportos piros kabát', 'Női', './src/assets/kabatok/kabat11.jpg'),
 (12, 19990, 'S', 'Gyapjú', 'H&M', 'Fekete', 'Meleg fekete gyapjú kabát', 'Férfi', './src/assets/kabatok/kabat12.jpg'),
-(13, 24990, 'M', 'Bőr', 'Mango', 'Barna', 'Divatos barna bőrkabát', 'Női', './src/assets/kabatok/kabat13.jpg'),
+(13, 24990, 'M', 'Gyapjú', 'Mango', 'Barna', 'Divatos barna gyapjú kabát', 'Női', './src/assets/kabatok/kabat13.jpg'),
 (14, 17990, 'XL', 'Nylon', 'Nike', 'Kék', 'Vízálló kék nylon kabát', 'Férfi', './src/assets/kabatok/kabat14.jpg'),
 (15, 21990, 'M', 'Pamut', 'Zara', 'Zöld', 'Kényelmes zöld pamut kabát', 'Női', './src/assets/kabatok/kabat15.jpg'),
 (16, 25990, 'L', 'Gyapjú', 'Bershka', 'Szürke', 'Stílusos szürke gyapjú kabát', 'Férfi', './src/assets/kabatok/kabat16.jpg'),
@@ -170,7 +170,7 @@ INSERT INTO `nadragok` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`,
 (4, 7490, 'M', 'Denim', 'Lee', 'Szürke', 'Klasszikus Farmer, Minden Alkalomra', 'Női', './src/assets/nadragok/nadrag4.jpg'),
 (5, 10990, 'XL', 'Pamut', 'Nike', 'Piros', 'Sportos Nadrág, Kényelmes Edzéshez', 'Férfi', './src/assets/nadragok/nadrag5.jpg'),
 (6, 6490, 'M', 'Poliészter', 'Adidas', 'Sötétkék', 'Futónadrág, Kiváló Szellőzés', 'Női', './src/assets/nadragok/nadrag6.jpg'),
-(7, 7990, 'L', 'Vászon', 'Puma', 'Barna', 'Kényelmes Nadrág, Tökéletes Pihenéshez', 'Férfi', './src/assets/nadragok/nadrag7.jpg'),
+(7, 7990, 'L', 'Vászon', 'Puma', 'Barna', 'Kényelmes Halásznadrág, Tökéletes Mindennapokhoz', 'Férfi', './src/assets/nadragok/nadrag7.jpg'),
 (8, 4990, 'S', 'Pamut', 'Mango', 'Fekete', 'Rövid Nadrág, Ideális Nyári Napokra', 'Női', './src/assets/nadragok/nadrag8.jpg'),
 (9, 10990, 'M', 'Denim', 'Wrangler', 'Kék', 'Divatos Farmer, Trendy Megjelenés', 'Férfi', './src/assets/nadragok/nadrag9.jpg'),
 (10, 6990, 'L', 'Poliészter', 'Bershka', 'Szürke', 'Sportos Leggings, Kényelmes Viselés', 'Női', './src/assets/nadragok/nadrag10.jpg'),
@@ -273,6 +273,22 @@ INSERT INTO `pulcsik` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, 
 (19, 14500, 'M', 'Poliészter', 'Adidas', 'Piros', 'Futó pulóver női', 'Női', './src/assets/pulcsik/pulcsi19.jpg'),
 (20, 15500, 'XL', 'Pamut', 'Puma', 'Szürke', 'Sportos női pulóver', 'Női', './src/assets/pulcsik/pulcsi20.jpg');
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `rendeles_adatok`
+--
+
+CREATE TABLE `rendeles_adatok` (
+  `id` int(11) NOT NULL,
+  `felhasznalonev` varchar(50) NOT NULL,
+  `nev` varchar(100) NOT NULL,
+  `rendeles_datum` datetime NOT NULL,
+  `osszeg` int(11) NOT NULL,
+  `szallitasi_cim` text NOT NULL,
+  `pdf_fajl` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
 --
 -- Indexek a kiírt táblákhoz
 --
@@ -312,6 +328,22 @@ ALTER TABLE `polok`
 --
 ALTER TABLE `pulcsik`
   ADD PRIMARY KEY (`id`);
+
+--
+-- A tábla indexei `rendeles_adatok`
+--
+ALTER TABLE `rendeles_adatok`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- A kiírt táblák AUTO_INCREMENT értéke
+--
+
+--
+-- AUTO_INCREMENT a táblához `rendeles_adatok`
+--
+ALTER TABLE `rendeles_adatok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

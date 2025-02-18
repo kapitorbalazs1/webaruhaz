@@ -65,14 +65,12 @@ module.exports = (Felhasznalo) => {
 
     router.post('/bejelentkezes', async (req, res) => {
         const { azonosito, jelszo } = req.body;
-
-        // Validate required fields
+    
         if (!azonosito || !jelszo) {
             return res.status(400).json({ hiba: 'Felhasználónév vagy email és jelszó megadása kötelező!' });
         }
-
+    
         try {
-            // Find user by username or email
             const felhasznalo = await Felhasznalo.findOne({
                 where: {
                     [Op.or]: [
@@ -81,25 +79,22 @@ module.exports = (Felhasznalo) => {
                     ]
                 }
             });
-
-            // Check if user exists
+    
             if (!felhasznalo) {
                 return res.status(404).json({ hiba: 'Felhasználónév nem található!' });
             }
-
-            // Compare passwords
+    
             const jelszoHelyes = await bcrypt.compare(jelszo, felhasznalo.jelszo);
             if (!jelszoHelyes) {
                 return res.status(401).json({ hiba: 'Helytelen jelszó!' });
             }
-
-            // Successful login
-            res.status(200).json({ uzenet: 'Sikeres bejelentkezés!', felhasznalo: felhasznalo });
+    
+            res.status(200).json({ uzenet: 'Sikeres bejelentkezés!', felhasznalo: { felhasznalonev: felhasznalo.felhasznalonev } });
         } catch (hiba) {
             console.error('Error during login:', hiba);
             res.status(500).json({ hiba: 'Váratlan hiba történt a bejelentkezés során.' });
         }
-    });
+    });    
 
     return router;
 };

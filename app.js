@@ -2,11 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 const Felhasznalo = require('./models/user');
+const rendelesUtvonalak = require('./routes/order');
+const rendelesekUtvonalak = require('./routes/order');
 
-const alkalmazas = express();
+const router = express();
 
-alkalmazas.use(cors());
-alkalmazas.use(express.json());
+router.use(cors());
+router.use(express.json());
 
 const adatbazis = new Sequelize('webaruhaz', 'root', '', {
     host: 'localhost',
@@ -31,10 +33,12 @@ adatbazis.authenticate()
 const authUtvonalak = require('./routes/auth')(Felhasznalo, adatbazis);
 const jelszoUtvonalak = require('./routes/password')(Felhasznalo, adatbazis);
 
-alkalmazas.use('/api', authUtvonalak);
-alkalmazas.use('/api', jelszoUtvonalak);
+router.use('/api', authUtvonalak);
+router.use('/api', jelszoUtvonalak);
+router.use('/api', rendelesUtvonalak);
+router.use('/api', rendelesekUtvonalak);
 
-alkalmazas.get('/api/ruhak', async (keres, valasz) => {
+router.get('/api/ruhak', async (keres, valasz) => {
     try {
         const [polok, pulcsik, ingek, kabatok, nadragok] = await Promise.all([
             adatbazis.query('SELECT * FROM polok', { type: Sequelize.QueryTypes.SELECT }),
@@ -60,7 +64,7 @@ alkalmazas.get('/api/ruhak', async (keres, valasz) => {
 });
 
 const port = 3000;
-alkalmazas.listen(port, () => {
+router.listen(port, () => {
     console.log(`🚀 A szerver elindult a ${port}-es porton!`);
     console.log(`🔗 Nyisd meg: http://localhost:${port}`);
 });

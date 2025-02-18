@@ -6,7 +6,7 @@ const sequelize = new Sequelize('webaruhaz', 'root', '', {
     logging: false
 });
 
-const User = sequelize.define('User', {
+const Felhasznalo = sequelize.define('Felhasznalo', {
     felhasznalonev: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -58,4 +58,4 @@ const User = sequelize.define('User', {
     timestamps: false
 });
 
-module.exports = User;
+module.exports = Felhasznalo;
