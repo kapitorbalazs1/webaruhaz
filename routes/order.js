@@ -36,11 +36,11 @@ if (!fs.existsSync(nyilvanosKonyvtar)) {
     console.log(`Könyvtár létrehozva: ${nyilvanosKonyvtar}`);
 }
 
-router.use('/pdfs', express.static(nyilvanosKonyvtar));
+router.use('/pdf', express.static(nyilvanosKonyvtar));
 router.use(express.json());
 router.use(cors());
 
-router.post('/generate-pdf', async (req, res) => {
+router.post('/pdf-generalas', async (req, res) => {
     const { elemek, felhasznalonev, vasarloAdatok, kuponKod, fizetesiMod } = req.body;
 
     if (!elemek?.length) {
@@ -53,25 +53,24 @@ router.post('/generate-pdf', async (req, res) => {
 
     // Összeg kiszámítása
     const osszeg = elemek.reduce((osszeg, elem) => osszeg + (elem.ar * elem.mennyiseg || 0), 0);
-    const nettoOsszeg = osszeg; // Netto összeg itt van definiálva
+    const nettoOsszeg = osszeg;
     const afa = Math.round(nettoOsszeg * 0.27); // ÁFA kiszámítása
-    const bruttoOsszeg = nettoOsszeg + afa; // Bruttó összeg
+    const bruttoOsszeg = nettoOsszeg + afa;
 
     // Szállítási díj meghatározása
-    const szallitasiDij = bruttoOsszeg >= 20000 ? 0 : 1500; // Szállítási díj
-    // Utánvétel díj
-    const utanvetDij = fizetesiMod === 'utánvét' ? 1000 : 0; // Utánvétel díj
+    const szallitasiDij = bruttoOsszeg >= 20000 ? 0 : 1500;
 
-    // Összesen a kedvezmény alkalmazása előtt
+    const utanvetDij = fizetesiMod === 'utánvét' ? 1000 : 0;
+
     const vegosszegKuponNelkul = bruttoOsszeg + szallitasiDij + utanvetDij;
 
     // Eredeti ár beállítása
-    const eredetiAr = vegosszegKuponNelkul; // Eredeti ár
+    const eredetiAr = vegosszegKuponNelkul;
 
     // Kedvezmény kiszámítása, ha van
-    const kedvezmeny = kuponKod?.kedvezmeny || 0; // Kedvezmény százalék
-    const kedvezmenyOsszeg = Math.round(eredetiAr * (kedvezmeny / 100)); // Kedvezmény összege
-    const vegosszeg = eredetiAr - kedvezmenyOsszeg; // Végső összeg kedvezmény után
+    const kedvezmeny = kuponKod?.kedvezmeny || 0;
+    const kedvezmenyOsszeg = Math.round(eredetiAr * (kedvezmeny / 100));
+    const vegosszeg = eredetiAr - kedvezmenyOsszeg;
 
     const formazottDatum = moment().tz('Europe/Budapest').format('YYYY.MM.DD HH:mm:ss');
 
@@ -186,7 +185,7 @@ router.post('/generate-pdf', async (req, res) => {
                 felhasznalonev,
                 nev: vasarloAdatok.nev,
                 rendeles_datum: new Date(),
-                osszeg: vegosszeg, // Végső összeg mentése
+                osszeg: vegosszeg,
                 szallitasi_cim: vasarloAdatok.szallitasiCim,
                 pdf_fajl: fajlNev,
             });
@@ -200,7 +199,7 @@ router.post('/generate-pdf', async (req, res) => {
     }
 });
 
-router.post('/open-pdf', (req, res) => {
+router.post('/pdf-megnyitas', async (req, res) => {
     const { fajlUtvonal } = req.body;
 
     if (!fajlUtvonal) {
@@ -221,7 +220,7 @@ router.post('/open-pdf', (req, res) => {
     });
 });
 
-router.get('/orders', async (req, res) => {
+router.get('/rendelesek', async (req, res) => {
     try {
         const rendelesek = await RendelesAdatok.findAll();
         if (!rendelesek?.length) {

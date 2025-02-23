@@ -66,5 +66,5 @@ router.get('/api/ruhak', async (keres, valasz) => {
 const port = 3000;
 router.listen(port, () => {
     console.log(`🚀 A szerver elindult a ${port}-es porton!`);
-    console.log(`🔗 Nyisd meg: http://localhost:${port}`);
+    console.log(`🔗 Nyisd meg az alábbi URL címen: http://localhost:${port}`);
 });

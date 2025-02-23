@@ -9,20 +9,20 @@ module.exports = (Felhasznalo) => {
         try {
             const { felhasznalonev, jelszo, szuletesi_datum, email_cim, telefonszam, lakcim, nem, vezeteknev, keresztnev, biztonsagi_kerdes, biztonsagi_valasz } = req.body;
 
-            // Validate required fields
+            // Kötelező mezők ellenőrzése
             if (!felhasznalonev || !jelszo || !email_cim || !biztonsagi_kerdes || !biztonsagi_valasz) {
                 console.error('Missing fields:', req.body);
                 return res.status(400).json({ hiba: 'Hiányosan kitöltött mezők!' });
             }
 
-            // Validate email format
+            // E-mail cím ellenőrzése
             const emailMinta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailMinta.test(email_cim)) {
                 console.error('Invalid email format:', email_cim);
                 return res.status(400).json({ hiba: 'Az email cím formátuma nem megfelelő!' });
             }
 
-            // Check if username or email already exists
+            // Létező felhasználó ellenőrzése
             const letezoFelhasznalo = await Felhasznalo.findOne({
                 where: {
                     [Op.or]: [
@@ -37,10 +37,10 @@ module.exports = (Felhasznalo) => {
                 return res.status(409).json({ hiba: 'A felhasználónév vagy az email cím már használatban van.' });
             }
 
-            // Hash the password
+            // Jelszó titkosítása
             const titkositottJelszo = await bcrypt.hash(jelszo, 10);
 
-            // Create new user
+            // Új felhasználó létrehozása
             const ujFelhasznalo = await Felhasznalo.create({
                 felhasznalonev,
                 jelszo: titkositottJelszo,
