@@ -33,7 +33,7 @@ module.exports = (Felhasznalo) => {
             });
 
             if (letezoFelhasznalo) {
-                console.error('User already exists:', letezoFelhasznalo);
+                console.error('Az alábbi felhasználói fiók már létezik:', letezoFelhasznalo);
                 return res.status(409).json({ hiba: 'A felhasználónév vagy az email cím már használatban van.' });
             }
 
@@ -55,10 +55,10 @@ module.exports = (Felhasznalo) => {
                 biztonsagi_valasz
             });
 
-            console.log('New user created:', ujFelhasznalo);
+            console.log('Felhasználói fiók létrehozva:', ujFelhasznalo);
             res.status(201).json({ uzenet: 'Sikeres regisztráció!', felhasznaloAzonosito: ujFelhasznalo.id });
         } catch (hiba) {
-            console.error('Error during registration:', hiba);
+            console.error('Hiba a regisztráció során:', hiba);
             res.status(500).json({ hiba: 'Váratlan hiba történt a regisztráció során.' });
         }
     });
