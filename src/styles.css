@@ -52,6 +52,14 @@ main {
   text-align: center;
 }
 
+.bal-also h2 {
+  margin-top: 85px;
+}
+
+.jobb-felso h2 {
+  margin-top: 55px;
+}
+
 .bal-felso:hover, .jobb-felso:hover, .bal-also:hover, .jobb-also:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
@@ -87,7 +95,7 @@ ul li strong {
 }
 
 .kep {
-  width: 100%;
+  width: 50%;
   max-width: 400px;
   border-radius: 10px;
   margin-top: 15px;
