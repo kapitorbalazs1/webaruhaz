@@ -1,53 +1,57 @@
 .slideshow-container {
   position: relative;
-  overflow: hidden;
   width: 100%;
-  height: 300px;
+  height: 480px;
+  overflow: hidden;
+  background-color: #f4f4f4;
+  border-radius: 15px;
 }
 
 .slideshow {
   display: flex;
-  transition: transform 1s ease;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.slide {
-  min-width: 100%;
+.dia {
+  flex: 0 0 100%;
   height: 100%;
 }
 
 img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
-.prev, .next {
+/* Slideshow nyilak */
+.elozo, .kovetkezo {
   position: absolute;
   top: 50%;
-  cursor: pointer;
-  background-color: rgba(189, 186, 186, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   border: none;
-  border-radius: 50%;
-  padding: 15px;
-  font-size: 24px;
+  border-radius: 40%;
+  padding: 12px;
+  font-size: 20px;
   color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease, transform 0.2s ease;
 }
 
-.prev {
+.elozo {
   left: 10px;
 }
 
-.next {
+.kovetkezo {
   right: 10px;
 }
 
-.prev:hover, .next:hover {
-  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
-  background-color: rgba(204, 204, 204, 0.9);
+.elozo:hover, .kovetkezo:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  cursor: url("../../assets/hover-cursor.png") 0 0, pointer;
   transform: scale(1.1);
 }
 
-.prev:active, .next:active {
+.elozo:active, .kovetkezo:active {
   transform: scale(0.95);
 }

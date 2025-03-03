@@ -1,0 +1,125 @@
+<div class="rendeles-container">
+  <h1>Rendelés Részletei</h1>
+  <div *ngIf="kosarTartalom.length === 0" class="nincs-elem">
+    <p>Nincs termék a kosárban.</p>
+  </div>
+  <div *ngIf="kosarTartalom.length > 0">
+    <!-- Vásárló adatai -->
+    <div class="vasarlo-adatok">
+      <h2>Vásárló Adatai</h2>
+      <div *ngIf="hibaUzenet" class="hiba-uzenet">{{ hibaUzenet }}</div>
+      <form (ngSubmit)="onSubmit()" #vasarloForm="ngForm">
+        <label for="nev">Név: <span class="required">*</span></label>
+        <input id="nev" class="regisztracio-input" [(ngModel)]="vasarloAdatok.nev" name="nev" required>
+        <div *ngIf="!vasarloAdatok.nev && urlapElkuldve" class="hiba-uzenet">A név megadása kötelező!</div>
+
+        <label for="szallitasiCim">Szállítási Cím: <span class="required">*</span></label>
+        <input id="szallitasiCim" class="regisztracio-input" [(ngModel)]="vasarloAdatok.szallitasiCim" name="szallitasiCim" required>
+        <div *ngIf="!vasarloAdatok.szallitasiCim && urlapElkuldve" class="hiba-uzenet">A szállítási cím megadása kötelező!</div>
+
+        <label for="lakcim">Lakcím: <span class="required">*</span></label>
+        <input id="lakcim" class="regisztracio-input" [(ngModel)]="vasarloAdatok.lakcim" name="lakcim" required>
+        <div *ngIf="!vasarloAdatok.lakcim && urlapElkuldve" class="hiba-uzenet">A lakcím megadása kötelező!</div>
+
+        <label for="telefon">Telefon: <span class="required">*</span></label>
+        <input id="telefon" class="regisztracio-input" [(ngModel)]="vasarloAdatok.telefon" name="telefon" required>
+        <div *ngIf="!vasarloAdatok.telefon && urlapElkuldve" class="hiba-uzenet">A telefon megadása kötelező!</div>
+
+        <label for="email">E-mail: <span class="required">*</span></label>
+        <input id="email" class="regisztracio-input" [(ngModel)]="vasarloAdatok.email" name="email" type="email" required>
+        <div *ngIf="!vasarloAdatok.email && urlapElkuldve" class="hiba-uzenet">Az e-mail megadása kötelező!</div>
+      </form>
+    </div>
+
+    <!-- Termékek Adatai -->
+    <h2>Termékek Adatai</h2>
+    <div class="rendeles-lista">
+      <div *ngFor="let item of kosarTartalom" class="rendeles-elem">
+        <div class="termek-nev">{{ item.marka }} - {{ item.leiras }}</div>
+        <div class="termek-mennyiseg">{{ item.mennyiseg }} db</div>
+        <div class="termek-meret">Méret: {{ item.meret }}</div>
+        <div class="termek-szin">Szín: {{ item.szin }}</div>
+        <div class="termek-nem">Neme: {{ item.nem }}</div>
+        <div class="termek-ar">{{ (item.ar * item.mennyiseg) | number:'1.0-0' }} HUF</div>
+      </div>
+    </div>
+
+    <!-- Összesítés -->
+    <div class="osszesen">
+      <span>Nettó összeg:</span>
+      <span>{{ nettoOsszeg | number:'1.0-0' }} HUF</span>
+    </div>
+    <div class="osszesen">
+      <span>ÁFA (27%):</span>
+      <span>{{ afa | number:'1.0-0' }} HUF</span>
+    </div>
+    <div *ngIf="fizetesiMod === 'utánvét'" class="osszesen">
+      <span>Utánvétel díj:</span>
+      <span>1000 HUF</span>
+    </div>
+    <div class="osszesen">
+      <span>Szállítási díj:</span>
+      <span>{{ szallitasiDij | number:'1.0-0' }} HUF</span>
+    </div>
+    <div *ngIf="kedvezmenyAlkalmazva" class="osszesen">
+      <span style="text-decoration: line-through;">Eredeti ár:</span>
+      <span style="text-decoration: line-through;">{{ osszesen | number:'1.0-0' }} HUF</span>
+    </div>
+    <div class="osszesen">
+      <span *ngIf="!kedvezmenyAlkalmazva">Összesen:</span>
+      <span *ngIf="kedvezmenyAlkalmazva">Kedvezményes ár:</span>
+      <span>{{ kedvezmenyAlkalmazva ? (ujOsszeg | number:'1.0-0') : (osszesen | number:'1.0-0') }} HUF</span>
+    </div>
+    <div *ngIf="kedvezmenyAlkalmazva" class="kupon-kedvezmeny">
+      <div class="kupon-kedvezmeny-content">
+        <p class="kupon-kod-text">Kuponkód: {{ kuponKod }}</p>
+        <p class="kedvezmeny-text">Kedvezmény: {{ kedvezmeny }}%</p>
+      </div>
+    </div>
+
+    <!-- Kuponkód Szekció -->
+    <div class="kupon-kod">
+      <h2>Kuponkód Beírása</h2>
+      <div *ngIf="kuponHiba" class="hiba-uzenet">{{ kuponHiba }}</div>
+      <form (ngSubmit)="kuponAlkalmazasa(kuponKod)" #kuponForm="ngForm">
+        <input type="text" [(ngModel)]="kuponKod" name="kuponKod" placeholder="Írd be a kuponkódot" required (paste)="beillesztes($event)">
+        <button type="button" class="kupon-gomb" (click)="beillesztesGombraKattint()">Beillesztés</button>
+        <button type="submit" class="kupon-gomb">Kupon alkalmazása</button>
+      </form>
+    </div>
+
+    <!-- Kiszállító cég kiválasztása -->
+    <div class="kiszallito-ceg">
+      <h2>Kiszállító Cég Kiválasztása</h2>
+      <label>Kiszállító Cég:</label>
+      <select [(ngModel)]="kiszallitoCeg" name="kiszallitoCeg" class="regisztracio-input">
+        <option value="GLS">GLS</option>
+        <option value="DHL">DHL</option>
+        <option value="DPD">DPD</option>
+      </select>
+    </div>
+    
+    <!-- Fizetési mód -->
+    <div class="fizetesi-mod">
+      <h2>Fizetési Mód</h2>
+      <label>Fizetési Mód Kiválasztása:</label>
+      <select [(ngModel)]="fizetesiMod" name="fizetesiMod" (change)="fizetesiModValtas()" class="regisztracio-input">
+        <option value="előre utalás">Előre utalás</option>
+        <option value="utánvét">Utánvét</option>
+      </select>
+    
+      <!-- Készpénz vagy bankkártya választás -->
+      <div *ngIf="fizetesiMod === 'utánvét'">
+        <label>Utánvétel fizetési mód:</label>
+        <select [(ngModel)]="utanvetFizetesiMod" name="utanvetFizetesiMod" class="regisztracio-input">
+          <option value="készpénz">Készpénz</option>
+          <option value="bankkártya">Bankkártya</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PDF gombok -->
+    <button class="pdf-gomb" (click)="letoltPDF()">Rendelés mentése PDF formátumban</button>
+    <button *ngIf="pdfUrl" class="pdf-gomb" (click)="megnyitPDF()">PDF megnyitása</button>
+  </div>
+</div>

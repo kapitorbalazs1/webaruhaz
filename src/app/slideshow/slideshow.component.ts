@@ -6,35 +6,66 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./slideshow.component.css']
 })
 export class SlideshowComponent implements OnInit, OnDestroy {
-  currentSlide = 0;
-  slides = [
-    { image: 'assets/akciók 1.jpeg' },
-    { image: 'assets/akciók 2.jpeg' },
-    { image: 'assets/akciók 3.jpeg' }
+  jelenlegiDia = 0;
+  diak = [
+    { kep: '../../assets/akciók 1.jpeg' },
+    { kep: '../../assets/akciók 2.jpeg' },
+    { kep: '../../assets/akciók 3.jpeg' }
   ];
-  intervalId: any;
+  private idozitoId: any = null;
+  private lapozasiIdo = 3000;
+  private autoLapozasEngedelyezve = true;
 
-  ngOnInit() {
-    this.startAutoScroll();
+  ngOnInit(): void {
+    this.automatikusLapozasIndit();
   }
 
-  ngOnDestroy() {
-    this.stopAutoScroll();
+  ngOnDestroy(): void {
+    this.automatikusLapozasLeallit();
   }
 
-  startAutoScroll() {
-    this.intervalId = setInterval(() => this.nextSlide(), 3000);
+  private automatikusLapozasIndit(): void {
+    if (this.autoLapozasEngedelyezve && this.idozitoId === null) {
+      this.idozitoId = setInterval(() => {
+        this.kovetkezoDia();
+      }, this.lapozasiIdo);
+    }
   }
 
-  stopAutoScroll() {
-    clearInterval(this.intervalId);
+  private automatikusLapozasLeallit(): void {
+    if (this.idozitoId !== null) {
+      clearInterval(this.idozitoId);
+      this.idozitoId = null;
+    }
   }
 
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+  kovetkezoDia(): void {
+    if (this.diak.length === 0) {
+      console.warn('Nincsenek diák betöltve!');
+      return;
+    }
+    this.jelenlegiDia++;
+    if (this.jelenlegiDia >= this.diak.length) {
+      this.jelenlegiDia = 0;
+    }
   }
 
-  prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+  elozoDia(): void {
+    if (this.diak.length === 0) {
+      console.warn('Nincsenek diák betöltve!');
+      return;
+    }
+    this.jelenlegiDia--;
+    if (this.jelenlegiDia < 0) {
+      this.jelenlegiDia = this.diak.length - 1;
+    }
+  }
+
+  lapozasiSebessegModositas(ujIdo: number): void {
+    if (ujIdo > 500) {
+      this.lapozasiIdo = ujIdo;
+      this.automatikusLapozasLeallit();
+      this.automatikusLapozasIndit();
+    }
   }
 }

@@ -1,43 +1,61 @@
-<div class="registration-container">
-    <h2 class="registration-title">Regisztráció</h2>
-    <form (ngSubmit)="onSubmit(registrationForm)" #registrationForm="ngForm">
-    
-    <label for="vezeteknev">Vezetéknév</label>
-    <input type="text" id="vezeteknev" class="registration-input" placeholder="Írd be a vezetékneved" [(ngModel)]="user.lastName" name="lastName" required/>
+<div class="regisztracio-container">
+  <h2 class="regisztracio-cim">Regisztráció</h2>
 
-    <label for="keresztnev">Keresztnév</label>
-    <input type="text" id="keresztnev" class="registration-input" placeholder="Írd be a keresztneved" [(ngModel)]="user.firstName" name="firstName" required/>
+  <div *ngIf="hibaUzenet" class="hiba-uzenet">{{ hibaUzenet }}</div>
 
-    <label for="felhasznalonev">Felhasználónév</label>
-    <input type="text" id="felhasznalonev" class="registration-input" placeholder="Válassz egy felhasználónevet" [(ngModel)]="user.username" name="username" required/>
+  <form (ngSubmit)="onSubmit(regisztracioForm)" #regisztracioForm="ngForm">
+    <label for="vezeteknev">Vezetéknév: <span class="required">*</span></label>
+    <input type="text" id="vezeteknev" class="regisztracio-input" placeholder="Írd be a vezetékneved" [(ngModel)]="felhasznalo.vezeteknev" name="vezeteknev" required />
 
-    <label for="jelszo">Jelszó</label>
-    <input type="password" id="jelszo" class="registration-input" placeholder="Adj meg egy erős jelszót" [(ngModel)]="user.password" name="password" required/>
+    <label for="keresztnev">Keresztnév: <span class="required">*</span></label>
+    <input type="text" id="keresztnev" class="regisztracio-input" placeholder="Írd be a keresztneved" [(ngModel)]="felhasznalo.keresztnev" name="keresztnev" required />
 
-    <label for="szuletesi_datum">Születési dátum</label>
-    <input type="date" id="szuletesi_datum" class="registration-input date-input" [(ngModel)]="user.birthDate" name="birthDate" required/>
+    <label for="felhasznalonev">Felhasználónév: <span class="required">*</span></label>
+    <input type="text" id="felhasznalonev" class="regisztracio-input" placeholder="Válassz egy felhasználónevet" [(ngModel)]="felhasznalo.felhasznalonev" name="felhasznalonev" required />
 
-    <label for="email_cim">Email cím</label>
-    <input type="email" id="email_cim" class="registration-input" placeholder="Írd be az email címed" [(ngModel)]="user.email" name="email" required/>
+    <label for="jelszo">Jelszó: <span class="required">*</span>
+      <span class="infogomb" (mouseenter)="tooltipMegjelenites = true" (mouseleave)="tooltipMegjelenites = false">ℹ️</span>
+      <div *ngIf="tooltipMegjelenites" class="tooltip">
+        A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell kis- és nagybetűket, számot, és speciális karaktert (pl. @$!%*?&).
+      </div>
+    </label>
+    <input type="password" id="jelszo" class="regisztracio-input" placeholder="Adj meg egy erős jelszót" [(ngModel)]="felhasznalo.jelszo" name="jelszo" required />
 
-    <label for="telefonszam">Telefonszám</label>
-    <input type="text" id="telefonszam" class="registration-input" placeholder="Írd be a telefonszámod" [(ngModel)]="user.phone" name="phone" required/>
+    <label for="jelszo_ismet">Jelszó ismét: <span class="required">*</span></label>
+    <input type="password" id="jelszo_ismet" class="regisztracio-input" placeholder="Írd be újra a jelszavad" [(ngModel)]="felhasznalo.jelszo_ismet" name="jelszo_ismet" required />
 
-    <label for="lakcim">Lakcím</label>
-    <input type="text" id="lakcim" class="registration-input" placeholder="Írd be a lakcímed" [(ngModel)]="user.address" name="address" required/>
+    <label for="szuletesi_datum">Születési dátum: <span class="required">*</span></label>
+    <input type="date" id="szuletesi_datum" class="regisztracio-input" [(ngModel)]="felhasznalo.szuletesi_datum" name="szuletesi_datum" required />
 
-    <label for="nem">Nem</label>
-    <select id="nem" class="registration-input" [(ngModel)]="user.gender" name="gender" required> 
-        <option value="" disabled selected>Válaszd ki a nemed</option>
-        <option value="ferfi">Férfi</option>
-        <option value="no">Nő</option>
-        <option value="egyeb">Egyéb</option>
+    <label for="email">E-mail cím: <span class="required">*</span></label>
+    <input type="email" id="email" class="regisztracio-input" placeholder="Írd be az e-mail címed" [(ngModel)]="felhasznalo.email_cim" name="email_cim" required />
+
+    <label for="telefonszam">Telefonszám: <span class="required">*</span></label>
+    <input type="text" id="telefonszam" class="regisztracio-input" placeholder="Írd be a telefonszámod" [(ngModel)]="felhasznalo.telefonszam" name="telefonszam" required />
+
+    <label for="lakcim">Lakcím: <span class="required">*</span></label>
+    <input type="text" id="lakcim" class="regisztracio-input" placeholder="Írd be a lakcímed" [(ngModel)]="felhasznalo.lakcim" name="lakcim" required />
+
+    <label for="nem">Nem: <span class="required">*</span></label>
+    <select id="nem" class="regisztracio-input" [(ngModel)]="felhasznalo.nem" name="nem" required>
+      <option value="" disabled selected>Válaszd ki a nemed</option>
+      <option value="ferfi">Férfi</option>
+      <option value="no">Nő</option>
+      <option value="egyeb">Egyéb</option>
     </select>
 
-    <button type="submit" class="registration-button">Regisztrálás</button>
-</form>
+    <label for="biztonsagi_kerdes">Biztonsági kérdés: <span class="required">*</span></label>
+    <input type="text" id="biztonsagi_kerdes" class="regisztracio-input" placeholder="Írd be a biztonsági kérdést" [(ngModel)]="felhasznalo.biztonsagi_kerdes" name="biztonsagi_kerdes" required />
 
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <label for="biztonsagi_valasz">Biztonsági válasz: <span class="required">*</span></label>
+    <input type="text" id="biztonsagi_valasz" class="regisztracio-input" placeholder="Írd be a biztonsági választ" [(ngModel)]="felhasznalo.biztonsagi_valasz" name="biztonsagi_valasz" required />
 
-<app-footer></app-footer>
+    <button type="submit" class="regisztracio-gomb" [disabled]="betoltesFolyamatban">
+      {{ betoltesFolyamatban ? 'Regisztrálás...' : 'Regisztrálás' }}
+    </button>
+
+    <p class="belepes-link">
+      Már van fiókod? <a routerLink="/bejelentkezes">Jelentkezz be!</a>
+    </p>
+  </form>
 </div>

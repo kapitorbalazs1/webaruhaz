@@ -1,69 +1,80 @@
 nav {
-  background-color: #444; 
-  border-radius: 10px;
+  background-color: rgba(54, 54, 54, 0.95);
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 nav ul {
   list-style: none;
   margin: 0;
-  padding: 0;
   display: flex;
   align-items: center;
-}
-
-.cim {
-  pointer-events: none;
-  color: white;
-  cursor: default;
-}
-
-.jobbra {
-  margin-left: auto;
-  display: flex;
-}
-
-nav a {
-  border-radius: 10px;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  transition: background-color 0.5s ease, transform 0.5s ease;
-}
-
-nav a:hover {
-  background-color: rgb(143, 145, 143);
-  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
-  transform: scale(1.05);
+  flex-wrap: wrap;
 }
 
 nav li {
   position: relative;
 }
 
-nav li:hover .dropdown {
-  visibility: visible;
-  opacity: 1;
-  transition: visibility 0s linear 0s, opacity 0.5s ease;
+nav a {
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover {
+  background-color: rgb(121, 121, 121);
+  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
+  transform: scale(1.05);
+}
+
+.cim {
+  pointer-events: none;
+  color: white;
+  cursor: default;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+.jobbra {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown {
   position: absolute;
   visibility: hidden;
-  background-color: #444;
-  border-radius: 10px;
-  padding: 0;
+  background-color: rgba(54, 54, 54, 0.85);
   z-index: 1000;
   opacity: 0;
-  transition: visibility 0s linear 0.5s, opacity 0.5s ease;
+  transition: visibility 0s linear 0.3s, opacity 0.3s ease;
   top: 100%;
-  flex-direction: column;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 135px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  border-radius: 10px;
+}
+
+nav li:hover .dropdown {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .dropdown li {
   display: block;
+  width: 100%;
+  margin: 0;
 }
 
 .dropdown a {
@@ -74,13 +85,131 @@ nav li:hover .dropdown {
   text-transform: none;
   line-height: 1.5;
   box-sizing: border-box;
+  display: block;
 }
 
-.dropdown a i {
-  padding-right: 0;
+.dropdown a:hover {
+  background-color: rgb(104, 104, 104);
 }
 
-.dropdown li:hover a {
-  cursor: url("src/assets/hover-cursor.png") 0 0, pointer;
-  background-color: rgb(143, 145, 143);
+.dropdown.kosar-dropdown {
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  max-width: 100%;
+  max-height: 70vh;
+  padding: 10px;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.kosar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.kosar-tetel-reszletek {
+  text-align: center;
+  width: 100%;
+}
+
+.kosar-tetel-vezerlok {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.osszeg {
+  padding-top: 5px;
+}
+
+.gomb {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.gomb:hover {
+  background-color: #0056b3;
+  cursor: url("../../assets/hover-cursor.png") 0 0, auto;
+}
+
+.gomb-novel {
+  background-color: #28a745;
+}
+
+.gomb-novel:hover {
+  background-color: #218838;
+  cursor: url("../../assets/hover-cursor.png") 0 0, auto;
+}
+
+.gomb-csokkent {
+  background-color: #ffc107;
+}
+
+.gomb-csokkent:hover {
+  background-color: #e0a800;
+  cursor: url("../../assets/hover-cursor.png") 0 0, auto;
+}
+
+.gomb-torol {
+  background-color: #dc3545;
+}
+
+.gomb-torol:hover {
+  background-color: #c82333;
+  cursor: url("../../assets/hover-cursor.png") 0 0, auto;
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+/* Reszponzivitás beállítása */
+@media only screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .jobbra {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dropdown {
+    position: static;
+    align-items: center;
+    visibility: visible;
+    opacity: 1;
+    background-color: transparent;
+    box-shadow: none;
+    left: 0;
+    transform: none;
+  }
+  
+  .dropdown a {
+    padding-left: 30px;
+    align-items: center;
+  }
+
+  .dropdown.kosar-dropdown {
+    left: 0;
+    transform: none;
+    min-width: 100%;
+  }
 }

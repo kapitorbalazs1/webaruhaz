@@ -6,14 +6,14 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-  showFooter: boolean = false;
+  lathatoLablec: boolean = false;
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
+  ellenorizGorgetest() {
+    const felsoPozicio = window.pageYOffset || document.documentElement.scrollTop;
+    const ablakMagassag = window.innerHeight;
+    const dokumentumMagassag = document.documentElement.scrollHeight;
 
-    this.showFooter = scrollTop + windowHeight >= documentHeight - 5;
+    this.lathatoLablec = felsoPozicio + ablakMagassag >= dokumentumMagassag - 5;
   }
 }

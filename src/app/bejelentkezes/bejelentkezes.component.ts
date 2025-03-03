@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-bejelentkezes',
@@ -9,43 +11,60 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./bejelentkezes.component.css']
 })
 export class BejelentkezesComponent {
-  username: string = '';
-  password: string = '';
-  usernameError: string = '';
-  passwordError: string = '';
-  generalError: string | null = null;
+  azonosito = '';  
+  jelszo = '';  
+  hibaUzenet: string | null = null;  
+  betoltesFolyamatban = false;  
+  showTooltip = false;
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
 
-  onSubmit() {
-    this.usernameError = '';
-    this.passwordError = '';
-    this.generalError = null;
+  async onSubmit() {
+    this.hibaUzenet = null;
 
-    if (!this.username && !this.password) {
-      this.generalError = 'Kérjük, töltse ki az összes mezőt.';
+    if (!this.azonosito || !this.jelszo) {
+      this.hibaMegjelenit('A *-gal jelölt mezők kitöltése kötelező!');
       return;
     }
 
-    this.http.post('http://localhost:3000/api/login', {
-      username: this.username,
-      password: this.password
-    })
-    .subscribe(
-      () => {
-        this.authService.login();
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Error logging in:', error);
-        if (error.status === 401) {
-          this.passwordError = 'Helytelen jelszó!';
-        } else if (error.status === 404) {
-          this.usernameError = 'Felhasználónév nem található!';
-        } else {
-          this.generalError = 'Váratlan hiba történt. Kérjük, próbálja újra később.';
-        }
+    this.betoltesFolyamatban = true;
+
+    try {
+      const valasz = await firstValueFrom(
+        this.http.post<{ token: string, felhasznalo: { felhasznalonev: string } }>('http://localhost:3000/api/bejelentkezes', {
+          azonosito: this.azonosito,
+          jelszo: this.jelszo
+        })
+      );
+
+      console.log('Bejelentkezés válasz:', valasz);
+      this.authService.bejelentkezes(valasz.felhasznalo.felhasznalonev);
+      this.snackBar.open('Sikeres bejelentkezés! Üdv újra! 🎉', 'OK', { duration: 2500, verticalPosition: 'top', horizontalPosition: 'center' });
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      let uzenet = '';
+
+      if (error.status === 401) {
+        uzenet = 'Rossz jelszó! Próbáld újra.';
+      } else if (error.status === 404) {
+        uzenet = 'Nem található ilyen felhasználó.';
+      } else {
+        uzenet = 'Hiba történt, kérlek próbáld újra egy kicsit később.';
       }
-    );
+
+      this.hibaMegjelenit(uzenet);
+    } finally {
+      this.betoltesFolyamatban = false;
+    }
+  }
+
+  hibaMegjelenit(uzenet: string) {
+    this.hibaUzenet = uzenet;
+    this.snackBar.open(uzenet, 'Bezárás', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
   }
 }
