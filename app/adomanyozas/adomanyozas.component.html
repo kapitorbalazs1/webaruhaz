@@ -1,0 +1,60 @@
+<div class="adomany-container">
+  <h1>Adományozás</h1>
+  <div *ngIf="hibaUzenet" class="hiba-uzenet">{{ hibaUzenet }}</div>
+  <p>
+    Köszönjük, hogy segíteni szeretnél azoknak, akiknek a legnagyobb szükségük van rá! Az adományoddal közvetlenül hozzájárulhatsz ahhoz, hogy életet változtassunk meg. Célunk, hogy segítsük a rászoruló családokat, gyermekeket és időseket, akik nehéz anyagi és társadalmi körülmények között küzdenek mindennapjaikért.
+  </p>
+  <p>
+    Az adományok segítségével biztosítjuk az alapvető szükségleteket, mint például élelmiszer, ruházat, iskolai eszközök, és orvosi ellátás. Emellett támogatjuk a közösségi programokat, amelyek lehetőséget teremtenek az oktatásra, a szakmai képzésre és a társadalmi integrációra. Minden egyes adomány hozzájárul ahhoz, hogy reményt és lehetőségeket adjunk azoknak, akiknek a legnagyobb szükségük van rá.
+  </p>
+  
+  <img src="../../assets/adomany 1.jpg" alt="" title="">
+
+  <div class="adomany-lehetosegek">
+    <h2>Adományozási lehetőségek</h2>
+    <ul>
+      <li>
+        <strong>Anyagi támogatás:</strong> Minden kis összeg számít, és óriási segítség lehet. Az adományod közvetlenül a rászorulókhoz jut, és segít nekik az alapvető szükségletek fedezésében.
+      </li>
+      <li>
+        <strong>Termékadomány:</strong> Ruhák, játékok, iskolai eszközök vagy bármilyen hasznos dolog örömmel fogadott. Ezeket a termékeket közvetlenül kiosztjuk azoknak, akiknek a legnagyobb szükségük van rájuk.
+      </li>
+      <li>
+        <strong>Önkéntesség:</strong> Légy a csapatunk tagja, és vegyél részt közösségi projektjeinkben. Az önkéntes munkával közvetlenül segíthetsz azoknak, akiknek a legnagyobb szükségük van a támogatásra.
+      </li>
+    </ul>
+  </div>
+
+  <img src="../../assets/adomany 2.jpg" alt="" title="">
+
+  <div class="penz-kuldese">
+    <h2>Pénz küldése</h2>
+    <p>
+      Ha anyagi támogatással szeretnél segíteni, az alábbi űrlap segítségével küldhetsz pénzt. Az adományod közvetlenül a rászorulókhoz jut, és segít nekik az alapvető szükségletek fedezésében. Cserébe egy kuponkódot kapsz, amit a webáruházunkban vásárláskor felhasználhatsz.
+    </p>
+    
+    <form (ngSubmit)="onSubmit(+osszeg.value, email.value)" #adomanyozasUrlap="ngForm">
+      <div class="form-group">
+        <label for="osszeg">Összeg (HUF): <span class="required">*</span>
+          <span class="infogomb" (mouseenter)="tooltipMegjelenites = true" (mouseleave)="tooltipMegjelenites = false">ℹ️</span>
+          <div *ngIf="tooltipMegjelenites" class="tooltip">
+              Az összegnek legalább 100 HUF-nak kell lennie.
+          </div>
+        </label>
+        <input id="osszeg" class="adomanyozas-input" type="number" name="osszeg" min="100" required #osszeg placeholder="Adj meg egy összeget (HUF)" />
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail cím: <span class="required">*</span></label>
+        <input id="email" class="adomanyozas-input" type="email" name="email" required #email placeholder="Írd be az e-mail címed" />
+      </div>
+      <button type="submit" [disabled]="adomanyozasUrlap.invalid">Küldés</button>
+    </form>
+    
+    <div *ngIf="kuponMegjelenites" class="kupon-kod">
+      <h3>Köszönjük a támogatásod!</h3>
+      <p>Az alábbi kuponkódot kaptad: <strong>{{ kuponKod }}</strong></p>
+      <p>Kedvezmény: <strong>{{ kedvezmeny }}%</strong></p>
+      <button (click)="vagolapraMasolas(kuponKod)" style="max-width: 200px;">{{ masolGombSzoveg }}</button>
+    </div>
+  </div>
+</div>

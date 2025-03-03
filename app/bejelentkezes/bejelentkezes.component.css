@@ -1,0 +1,155 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 18px;
+    margin: 0;
+}
+
+.bejelentkezes-container {
+    max-width: 480px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(50, 50, 50, 0.9);
+    margin-bottom: 80px;
+}
+
+.bejelentkezes-cim {
+    text-align: center;
+    margin-bottom: 18px;
+    font-size: 22px;
+    color: #d0d0d0;
+}
+
+.bejelentkezes-input {
+    width: 100%;
+    padding: 9px;
+    margin-bottom: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: rgba(38, 38, 38, 0.95);
+    color: white;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.bejelentkezes-input:hover {
+    border-color: #1a75ff;
+}
+
+.bejelentkezes-input::placeholder {
+    color: #aaa;
+}
+
+.bejelentkezes-gomb {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    background: linear-gradient(120deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.bejelentkezes-gomb:hover {
+    transform: scale(1.02);
+    cursor: url("../../assets/hover-cursor.png") 0 0, pointer;
+}
+
+/* Kötelező mezők */
+.required {
+    color: red;
+}  
+
+.hiba-uzenet {
+    color: white;
+    font-size: 14px;
+    background: #e57373;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.hiba-uzenet::before {
+    content: "⚠ ";
+    font-weight: bold;
+}
+
+/* Belépés link */
+.belepes-link {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.belepes-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.belepes-link a:hover {
+    text-decoration: underline;
+    cursor: url("../../assets/hover-cursor.png") 0 0, pointer;
+}
+
+/* Info gomb */
+.infogomb {
+    cursor: url("../../assets/hover-cursor.png") 0 0, pointer;
+    font-size: 14px;
+    margin-left: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    left: 43%;
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    white-space: normal;
+    text-align: left;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+}
+
+/* Reszponzivitás beállítása */
+@media only screen and (max-width: 768px) {
+    .bejelentkezes-container {
+        padding: 14px;
+        margin-bottom: 45px;
+    }
+
+    .bejelentkezes-cim {
+        font-size: 19px;
+    }
+
+    .bejelentkezes-input,
+    .bejelentkezes-gomb {
+        font-size: 13px;
+    }
+}

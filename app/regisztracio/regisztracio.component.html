@@ -1,0 +1,61 @@
+<div class="regisztracio-container">
+  <h2 class="regisztracio-cim">Regisztráció</h2>
+
+  <div *ngIf="hibaUzenet" class="hiba-uzenet">{{ hibaUzenet }}</div>
+
+  <form (ngSubmit)="onSubmit(regisztracioForm)" #regisztracioForm="ngForm">
+    <label for="vezeteknev">Vezetéknév: <span class="required">*</span></label>
+    <input type="text" id="vezeteknev" class="regisztracio-input" placeholder="Írd be a vezetékneved" [(ngModel)]="felhasznalo.vezeteknev" name="vezeteknev" required />
+
+    <label for="keresztnev">Keresztnév: <span class="required">*</span></label>
+    <input type="text" id="keresztnev" class="regisztracio-input" placeholder="Írd be a keresztneved" [(ngModel)]="felhasznalo.keresztnev" name="keresztnev" required />
+
+    <label for="felhasznalonev">Felhasználónév: <span class="required">*</span></label>
+    <input type="text" id="felhasznalonev" class="regisztracio-input" placeholder="Válassz egy felhasználónevet" [(ngModel)]="felhasznalo.felhasznalonev" name="felhasznalonev" required />
+
+    <label for="jelszo">Jelszó: <span class="required">*</span>
+      <span class="infogomb" (mouseenter)="tooltipMegjelenites = true" (mouseleave)="tooltipMegjelenites = false">ℹ️</span>
+      <div *ngIf="tooltipMegjelenites" class="tooltip">
+        A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell kis- és nagybetűket, számot, és speciális karaktert (pl. @$!%*?&).
+      </div>
+    </label>
+    <input type="password" id="jelszo" class="regisztracio-input" placeholder="Adj meg egy erős jelszót" [(ngModel)]="felhasznalo.jelszo" name="jelszo" required />
+
+    <label for="jelszo_ismet">Jelszó ismét: <span class="required">*</span></label>
+    <input type="password" id="jelszo_ismet" class="regisztracio-input" placeholder="Írd be újra a jelszavad" [(ngModel)]="felhasznalo.jelszo_ismet" name="jelszo_ismet" required />
+
+    <label for="szuletesi_datum">Születési dátum: <span class="required">*</span></label>
+    <input type="date" id="szuletesi_datum" class="regisztracio-input" [(ngModel)]="felhasznalo.szuletesi_datum" name="szuletesi_datum" required />
+
+    <label for="email">E-mail cím: <span class="required">*</span></label>
+    <input type="email" id="email" class="regisztracio-input" placeholder="Írd be az e-mail címed" [(ngModel)]="felhasznalo.email_cim" name="email_cim" required />
+
+    <label for="telefonszam">Telefonszám: <span class="required">*</span></label>
+    <input type="text" id="telefonszam" class="regisztracio-input" placeholder="Írd be a telefonszámod" [(ngModel)]="felhasznalo.telefonszam" name="telefonszam" required />
+
+    <label for="lakcim">Lakcím: <span class="required">*</span></label>
+    <input type="text" id="lakcim" class="regisztracio-input" placeholder="Írd be a lakcímed" [(ngModel)]="felhasznalo.lakcim" name="lakcim" required />
+
+    <label for="nem">Nem: <span class="required">*</span></label>
+    <select id="nem" class="regisztracio-input" [(ngModel)]="felhasznalo.nem" name="nem" required>
+      <option value="" disabled selected>Válaszd ki a nemed</option>
+      <option value="ferfi">Férfi</option>
+      <option value="no">Nő</option>
+      <option value="egyeb">Egyéb</option>
+    </select>
+
+    <label for="biztonsagi_kerdes">Biztonsági kérdés: <span class="required">*</span></label>
+    <input type="text" id="biztonsagi_kerdes" class="regisztracio-input" placeholder="Írd be a biztonsági kérdést" [(ngModel)]="felhasznalo.biztonsagi_kerdes" name="biztonsagi_kerdes" required />
+
+    <label for="biztonsagi_valasz">Biztonsági válasz: <span class="required">*</span></label>
+    <input type="text" id="biztonsagi_valasz" class="regisztracio-input" placeholder="Írd be a biztonsági választ" [(ngModel)]="felhasznalo.biztonsagi_valasz" name="biztonsagi_valasz" required />
+
+    <button type="submit" class="regisztracio-gomb" [disabled]="betoltesFolyamatban">
+      {{ betoltesFolyamatban ? 'Regisztrálás...' : 'Regisztrálás' }}
+    </button>
+
+    <p class="belepes-link">
+      Már van fiókod? <a routerLink="/bejelentkezes">Jelentkezz be!</a>
+    </p>
+  </form>
+</div>

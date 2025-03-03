@@ -1,0 +1,9 @@
+<div class="slideshow-container">
+  <div class="slideshow" [style.transform]="'translateX(' + (-jelenlegiDia * 100) + '%)'">
+    <div class="dia" *ngFor="let dia of diak; let i = index;">
+      <img [src]="dia.kep" [alt]="'Akciós ajánlat ' + (i + 1)">
+    </div>
+  </div>
+  <button class="elozo" aria-label="Előző dia" (click)="elozoDia()">&#10094;</button>
+  <button class="kovetkezo" aria-label="Következő dia" (click)="kovetkezoDia()">&#10095;</button>
+</div>
