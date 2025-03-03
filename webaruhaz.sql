@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 11. 18:21
+-- Létrehozás ideje: 2025. Már 03. 10:33
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -290,6 +290,14 @@ CREATE TABLE `rendeles_adatok` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
+-- A tábla adatainak kiíratása `rendeles_adatok`
+--
+
+INSERT INTO `rendeles_adatok` (`id`, `felhasznalonev`, `nev`, `rendeles_datum`, `osszeg`, `szallitasi_cim`, `pdf_fajl`) VALUES
+(1, 'teszt2', 'Teszt255', '2025-03-03 10:31:18', 6637, '1566', 'rendeles_1740994278389.pdf'),
+(2, 'teszt2', 'Teszt23', '2025-03-03 10:32:20', 14200, '1566', 'rendeles_1740994340056.pdf');
+
+--
 -- Indexek a kiírt táblákhoz
 --
 
@@ -343,7 +351,7 @@ ALTER TABLE `rendeles_adatok`
 -- AUTO_INCREMENT a táblához `rendeles_adatok`
 --
 ALTER TABLE `rendeles_adatok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

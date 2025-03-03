@@ -247,11 +247,15 @@ router.post('/pdf-megnyitas', async (req, res) => {
 
 router.get('/rendelesek', async (req, res) => {
   try {
-    const rendelesek = await RendelesAdatok.findAll();
-    if (!rendelesek?.length) {
-      return res.status(404).json({ hiba: 'Nincsenek rendelések.' });
+    // Ensure rendelesek directory exists
+    if (!fs.existsSync(nyilvanosKonyvtar)) {
+      fs.mkdirSync(nyilvanosKonyvtar, { recursive: true });
+      console.log(`Könyvtár létrehozva: ${nyilvanosKonyvtar}`);
     }
+    
+    const rendelesek = await RendelesAdatok.findAll();
     res.status(200).json(rendelesek.map(rendeles => ({
+
       id: rendeles.id,
       datum: rendeles.rendeles_datum,
       vasarloNev: rendeles.nev,
