@@ -46,7 +46,7 @@ router.use('/pdf', express.static(nyilvanosKonyvtar));
 router.use(express.json());
 router.use(cors());
 
-async function getBrowserInstance() {
+async function lekerBongeszoPeldanyt() {
   if (!bongeszoPeldany) {
     bongeszoPeldany = await puppeteer.launch({
       headless: true,
@@ -169,7 +169,7 @@ router.post('/pdf-generalas', async (req, res) => {
   `;
 
   try {
-    const bongeszo = await getBrowserInstance();
+    const bongeszo = await lekerBongeszoPeldanyt();
     const oldal = await bongeszo.newPage();
 
     await oldal.setContent(htmlTartalom, {
@@ -247,7 +247,6 @@ router.post('/pdf-megnyitas', async (req, res) => {
 
 router.get('/rendelesek', async (req, res) => {
   try {
-    // Ensure rendelesek directory exists
     if (!fs.existsSync(nyilvanosKonyvtar)) {
       fs.mkdirSync(nyilvanosKonyvtar, { recursive: true });
       console.log(`Könyvtár létrehozva: ${nyilvanosKonyvtar}`);
