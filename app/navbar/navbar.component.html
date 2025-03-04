@@ -1,0 +1,58 @@
+<nav>
+    <ul>
+        <li><a class="cim">DivatPalota</a></li>
+        <li routerLinkActive="active"><a routerLink="/home">Kezdőlap <i class="bi bi-house-fill"></i></a></li>
+        <li routerLinkActive="active">
+            <a href="#">Ruhák <i class="fas fa-tshirt"></i></a>
+            <ul class="dropdown">
+                <li routerLinkActive="active"><a routerLink="/polok">Pólók <i class="bi bi-tag-fill"></i></a></li>
+                <li routerLinkActive="active"><a routerLink="/pulcsik">Pulcsik <i class="bi bi-tag-fill"></i></a></li>
+                <li routerLinkActive="active"><a routerLink="/ingek">Ingek <i class="bi bi-tag-fill"></i></a></li>
+                <li routerLinkActive="active"><a routerLink="/kabatok">Kabátok <i class="bi bi-tag-fill"></i></a></li>
+                <li routerLinkActive="active"><a routerLink="/nadragok">Nadrágok <i class="bi bi-tag-fill"></i></a></li>
+            </ul>
+        </li>
+        <li class="balra" routerLinkActive="active"><a routerLink="/adomanyozas">Adományozás <i class="bi bi-gift-fill"></i></a></li>
+
+        <div class="jobbra" *ngIf="!bejelentkezve">
+            <li routerLinkActive="active"><a routerLink="/regisztracio">Regisztráció <i class="bi bi-person-plus-fill"></i></a></li>
+            <li routerLinkActive="active"><a routerLink="/bejelentkezes">Bejelentkezés <i class="bi bi-box-arrow-in-right"></i></a></li>
+        </div>
+
+        <div class="jobbra" *ngIf="bejelentkezve">
+            <li>
+                <a href="#" (click)="kosarMegnyitas()">Kosár ({{ osszMennyiseg() }} db) <i class="bi bi-cart-fill"></i></a>
+                <ul class="dropdown kosar-dropdown" *ngIf="kosarLenyitva">
+                  <li *ngFor="let kosarElem of kosarTartalom" class="kosar">
+                    <div class="kosar-tetel-reszletek">
+                        <span>{{ kosarElem.marka }} - {{ kosarElem.leiras }}</span><br>
+                        <span>{{ kosarElem.ar }} HUF ({{ kosarElem.mennyiseg }} db)</span>
+                    </div>
+                    <div class="kosar-tetel-vezerlok">
+                        <button class="gomb gomb-novel" (click)="novelMennyiseg(kosarElem)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="gomb gomb-csokkent" (click)="csokkentMennyiseg(kosarElem)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button class="gomb gomb-torol" (click)="eltavolitTermek(kosarElem)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                  </li>
+                  <li *ngIf="kosarTartalom.length > 0" class="text-center">
+                        <button class="gomb gomb-torol" (click)="kosarUritese()">Összes törlése</button>
+                        <button class="gomb gomb-folytatas" (click)="folytatVasarlast()">Fizetés</button>
+                  </li>
+                  <li class="osszeg"><strong>Összesen: {{ osszAr() }} HUF</strong></li>
+                </ul>
+            </li>
+        <li routerLinkActive="active">
+            <a href="#">Fiókom <i class="bi bi-person-circle"></i></a>
+            <ul class="dropdown">
+                <li routerLinkActive="active"><a routerLink="/rendelesek">Rendelések <i class="bi bi-bag-check"></i></a></li>
+                <li><a (click)="kijelentkezes()">Kijelentkezés <i class="bi bi-box-arrow-right"></i></a></li>
+            </ul>
+        </div>
+    </ul>
+</nav>

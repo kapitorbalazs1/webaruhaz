@@ -1,0 +1,57 @@
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+  background-color: #f4f4f4;
+  border-radius: 15px;
+}
+
+.slideshow {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dia {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Slideshow nyilak */
+.elozo, .kovetkezo {
+  position: absolute;
+  top: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 40%;
+  padding: 12px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease, transform 0.2s ease;
+}
+
+.elozo {
+  left: 10px;
+}
+
+.kovetkezo {
+  right: 10px;
+}
+
+.elozo:hover, .kovetkezo:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  cursor: url("../../assets/hover-cursor.png") 0 0, pointer;
+  transform: scale(1.1);
+}
+
+.elozo:active, .kovetkezo:active {
+  transform: scale(0.95);
+}
