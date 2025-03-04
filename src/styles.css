@@ -41,6 +41,7 @@ main {
   flex: 1 1 45%;
   background-color: rgba(54, 54, 54, 0.8);
   padding: 20px;
+  margin-top: 50px;
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
