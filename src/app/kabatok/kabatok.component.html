@@ -83,11 +83,16 @@
             <p><strong>Anyag:</strong> {{ kabat.anyag }}</p>
             <p><strong>Szín:</strong> {{ kabat.szin }}</p>
             <p><strong>Nem:</strong> {{ kabat.nem }}</p>
-            <button class="gomb gomb-kosarba" *ngIf="bejelentkezve" (click)="kosarhozAd(kabat)">Kosárba rakás</button>
+            <div *ngIf="bejelentkezve; else bejelentkezesUzenet">
+                <button class="gomb gomb-kosarba" (click)="kosarhozAd(kabat)">Kosárba rakás</button>
+            </div>
+            <ng-template #bejelentkezesUzenet>
+                <p class="bejelentkezes-uzenet">A vásárláshoz jelentkezzen be!</p>
+            </ng-template>
         </div>
     </div>
 
     <div *ngIf="!szurtKabatokLista.length" class="nincs-elem">
-        <p>Nincsenek elérhető kabátok!</p>
+        <p>Nincsenek elérhető pólók!</p>
     </div>
 </div>

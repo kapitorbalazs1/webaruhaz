@@ -178,7 +178,7 @@ select:hover {
     box-shadow: 0 0 5px rgba(97, 152, 255, 0.5);
 }
 
-.gomb-kosarba {
+.bejelentkezes-uzenet, .gomb-kosarba {
     background-color: #007bff;
     color: white;
     border: none;
@@ -190,13 +190,13 @@ select:hover {
     margin-top: 10px;
 }
 
-.gomb-kosarba:hover {
+.bejelentkezes-uzenet:hover, .gomb-kosarba:hover {
     background-color: #0056b3;
     transform: scale(1.05);
     cursor: url("../../assets/hover-cursor.png") 0 0, auto;
 }
 
-.gomb-kosarba:focus {
+.bejelentkezes-uzenet:focus, .gomb-kosarba:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(97, 152, 255, 0.5);
 }

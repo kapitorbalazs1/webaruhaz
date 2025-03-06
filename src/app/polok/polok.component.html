@@ -83,7 +83,12 @@
             <p><strong>Anyag:</strong> {{ polo.anyag }}</p>
             <p><strong>Szín:</strong> {{ polo.szin }}</p>
             <p><strong>Nem:</strong> {{ polo.nem }}</p>
-            <button class="gomb gomb-kosarba" *ngIf="bejelentkezve" (click)="kosarhozAd(polo)">Kosárba rakás</button>
+            <div *ngIf="bejelentkezve; else bejelentkezesUzenet">
+                <button class="gomb gomb-kosarba" (click)="kosarhozAd(polo)">Kosárba rakás</button>
+            </div>
+            <ng-template #bejelentkezesUzenet>
+                <p class="bejelentkezes-uzenet">A vásárláshoz jelentkezzen be!</p>
+            </ng-template>
         </div>
     </div>
 

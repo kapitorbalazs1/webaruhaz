@@ -149,3 +149,15 @@ ul li strong {
     padding-bottom: 200px;
   }
 }
+
+@media only screen and (min-width: 1410px) {
+  .bal-also h2 {
+    margin-top: 100px;
+  }
+}
+
+@media only screen and (min-width: 1810px) {
+  .bal-also h2 {
+    margin-top: 150px;
+  }
+}

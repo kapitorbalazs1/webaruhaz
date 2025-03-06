@@ -83,11 +83,16 @@
             <p><strong>Anyag:</strong> {{ pulcsi.anyag }}</p>
             <p><strong>Szín:</strong> {{ pulcsi.szin }}</p>
             <p><strong>Nem:</strong> {{ pulcsi.nem }}</p>
-            <button class="gomb gomb-kosarba" *ngIf="bejelentkezve" (click)="kosarhozAd(pulcsi)">Kosárba rakás</button>
+            <div *ngIf="bejelentkezve; else bejelentkezesUzenet">
+                <button class="gomb gomb-kosarba" (click)="kosarhozAd(pulcsi)">Kosárba rakás</button>
+            </div>
+            <ng-template #bejelentkezesUzenet>
+                <p class="bejelentkezes-uzenet">A vásárláshoz jelentkezzen be!</p>
+            </ng-template>
         </div>
     </div>
 
     <div *ngIf="!szurtPulcsikLista.length" class="nincs-elem">
-        <p>Nincsenek elérhető pulcsik!</p>
+        <p>Nincsenek elérhető pólók!</p>
     </div>
 </div>
