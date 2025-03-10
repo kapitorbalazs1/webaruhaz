@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'bejelentkezes', component: BejelentkezesComponent, data: { cim: 'Bejelentkezés' } },
   { path: 'elfelejtett-jelszo', component: ElfelejtettJelszoComponent, data: { cim: 'Elfelejtett jelszó' } },
   { path: 'polok', component: PolokComponent, data: { cim: 'Pólók' } },
-  { path: 'pulcsik', component: PuloverekComponent, data: { cim: 'Pulóverek' } },
+  { path: 'puloverek', component: PuloverekComponent, data: { cim: 'Pulóverek' } },
   { path: 'ingek', component: IngekComponent, data: { cim: 'Ingek' } },
   { path: 'kabatok', component: KabatokComponent, data: { cim: 'Kabátok' } },
   { path: 'nadragok', component: NadragokComponent, data: { cim: 'Nadrágok' } },
