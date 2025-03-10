@@ -5,7 +5,7 @@ import { RegisztracioComponent } from './regisztracio/regisztracio.component';
 import { BejelentkezesComponent } from './bejelentkezes/bejelentkezes.component';
 import { ElfelejtettJelszoComponent } from './elfelejtett-jelszo/elfelejtett-jelszo.component';
 import { PolokComponent } from './polok/polok.component';
-import { PulcsikComponent } from './pulcsik/pulcsik.component';
+import { PuloverekComponent } from './puloverek/puloverek.component';
 import { IngekComponent } from './ingek/ingek.component';
 import { KabatokComponent } from './kabatok/kabatok.component';
 import { NadragokComponent } from './nadragok/nadragok.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'bejelentkezes', component: BejelentkezesComponent, data: { cim: 'Bejelentkezés' } },
   { path: 'elfelejtett-jelszo', component: ElfelejtettJelszoComponent, data: { cim: 'Elfelejtett jelszó' } },
   { path: 'polok', component: PolokComponent, data: { cim: 'Pólók' } },
-  { path: 'pulcsik', component: PulcsikComponent, data: { cim: 'Pulcsik' } },
+  { path: 'pulcsik', component: PuloverekComponent, data: { cim: 'Pulóverek' } },
   { path: 'ingek', component: IngekComponent, data: { cim: 'Ingek' } },
   { path: 'kabatok', component: KabatokComponent, data: { cim: 'Kabátok' } },
   { path: 'nadragok', component: NadragokComponent, data: { cim: 'Nadrágok' } },

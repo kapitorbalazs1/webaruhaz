@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Ingek Katalógusa</h1>
+    <h1>Pulóverek Katalógusa</h1>
 
     <div class="szuro-vezerlok">
         <div class="rendezes-csoport">
@@ -75,16 +75,16 @@
     </div>
 
     <div class="grid">
-        <div class="elem" *ngFor="let ing of szurtIngekLista; let i = index">
-            <img [src]="ing.kep_url" alt="{{ ing.marka }} - {{ ing.leiras }}" title="{{ ing.marka }} - {{ ing.leiras }}" />
-            <p><strong>{{ ing.marka }}</strong> - {{ ing.leiras }}</p>
-            <p><strong>Ár:</strong> {{ ing.ar }} Ft</p>
-            <p><strong>Méret:</strong> {{ ing.meret }}</p>
-            <p><strong>Anyag:</strong> {{ ing.anyag }}</p>
-            <p><strong>Szín:</strong> {{ ing.szin }}</p>
-            <p><strong>Nem:</strong> {{ ing.nem }}</p>
+        <div class="elem" *ngFor="let pulover of szurtPuloverekLista; let i = index">
+            <img [src]="pulover.kep_url" alt="{{ pulover.marka }} - {{ pulover.leiras }}" title="{{ pulover.marka }} - {{ pulover.leiras }}" />
+            <p><strong>{{ pulover.marka }}</strong> - {{ pulover.leiras }}</p>
+            <p><strong>Ár:</strong> {{ pulover.ar }} Ft</p>
+            <p><strong>Méret:</strong> {{ pulover.meret }}</p>
+            <p><strong>Anyag:</strong> {{ pulover.anyag }}</p>
+            <p><strong>Szín:</strong> {{ pulover.szin }}</p>
+            <p><strong>Nem:</strong> {{ pulover.nem }}</p>
             <div *ngIf="bejelentkezve; else bejelentkezesUzenet">
-                <button class="gomb gomb-kosarba" (click)="kosarhozAd(ing)">Kosárba rakás</button>
+                <button class="gomb gomb-kosarba" (click)="kosarhozAd(pulover)">Kosárba rakás</button>
             </div>
             <ng-template #bejelentkezesUzenet>
                 <p class="bejelentkezes-uzenet">A vásárláshoz jelentkezzen be!</p>
@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    <div *ngIf="!szurtIngekLista.length" class="nincs-elem">
-        <p>Nincsenek elérhető ingek!</p>
+    <div *ngIf="!szurtPuloverekLista.length" class="nincs-elem">
+        <p>Nincsenek elérhető pulóverek!</p>
     </div>
 </div>

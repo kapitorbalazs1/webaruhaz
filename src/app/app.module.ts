@@ -14,7 +14,7 @@ import { RegisztracioComponent } from './regisztracio/regisztracio.component';
 import { BejelentkezesComponent } from './bejelentkezes/bejelentkezes.component';
 import { ElfelejtettJelszoComponent } from './elfelejtett-jelszo/elfelejtett-jelszo.component';
 import { PolokComponent } from './polok/polok.component';
-import { PulcsikComponent } from './pulcsik/pulcsik.component';
+import { PuloverekComponent } from './puloverek/puloverek.component';
 import { IngekComponent } from './ingek/ingek.component';
 import { KabatokComponent } from './kabatok/kabatok.component';
 import { NadragokComponent } from './nadragok/nadragok.component';
@@ -39,7 +39,7 @@ import { RendelesekComponent } from './rendelesek/rendelesek.component';
     BejelentkezesComponent,
     ElfelejtettJelszoComponent,
     PolokComponent,
-    PulcsikComponent,
+    PuloverekComponent,
     IngekComponent,
     KabatokComponent,
     NadragokComponent,
