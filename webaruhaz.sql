@@ -232,10 +232,10 @@ INSERT INTO `polok` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `n
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `pulcsik`
+-- Tábla szerkezet ehhez a táblához `puloverek`
 --
 
-CREATE TABLE `pulcsik` (
+CREATE TABLE `puloverek` (
   `id` int(11) NOT NULL,
   `ar` int(11) NOT NULL,
   `meret` varchar(10) NOT NULL,
@@ -248,30 +248,30 @@ CREATE TABLE `pulcsik` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `pulcsik`
+-- A tábla adatainak kiíratása `puloverek`
 --
 
-INSERT INTO `pulcsik` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `nem`, `kep_url`) VALUES
-(1, 10000, 'M', 'Pamut', 'Champion', 'Sötétkék', 'Kényelmes pulóver', 'Férfi', './src/assets/pulcsik/pulcsi1.jpg'),
-(2, 12000, 'L', 'Pamut', 'Puma', 'Narancs', 'Sportos pulóver', 'Férfi', './src/assets/pulcsik/pulcsi2.jpg'),
-(3, 9000, 'S', 'Pamut', 'Adidas', 'Szürke', 'Klasszikus pulóver', 'Férfi', './src/assets/pulcsik/pulcsi3.jpg'),
-(4, 15000, 'M', 'Poliészter', 'New Balance', 'Kék', 'Futó pulóver', 'Férfi', './src/assets/pulcsik/pulcsi4.jpg'),
-(5, 16000, 'XL', 'Pamut', 'H&M', 'Fekete', 'Kényelmes edző pulóver', 'Férfi', './src/assets/pulcsik/pulcsi5.jpg'),
-(6, 11000, 'M', 'Pamut', 'Zara', 'Zöld', 'Divatos pulóver', 'Férfi', './src/assets/pulcsik/pulcsi6.jpg'),
-(7, 13000, 'L', 'Pamut', 'Mango', 'Bordó', 'Stílusos pulóver', 'Férfi', './src/assets/pulcsik/pulcsi7.jpg'),
-(8, 9600, 'S', 'Pamut', 'Nike', 'Rózsaszín', 'Kényelmes női pulóver', 'Női', './src/assets/pulcsik/pulcsi8.jpg'),
-(9, 14500, 'M', 'Poliészter', 'Adidas', 'Fehér', 'Futó pulóver női', 'Női', './src/assets/pulcsik/pulcsi9.jpg'),
-(10, 15500, 'XL', 'Pamut', 'Reebok', 'Kék', 'Sportos női pulóver', 'Női', './src/assets/pulcsik/pulcsi10.jpg'),
-(11, 10000, 'M', 'Pamut', 'Levi\'s', 'Szürke', 'Klasszikus farmer pulóver', 'Férfi', './src/assets/pulcsik/pulcsi11.jpg'),
-(12, 12000, 'L', 'Pamut', 'Tommy Hilfiger', 'Piros', 'Elegáns pulóver', 'Férfi', './src/assets/pulcsik/pulcsi12.jpg'),
-(13, 9000, 'S', 'Pamut', 'Calvin Klein', 'Fekete', 'Minimalista pulóver', 'Férfi', './src/assets/pulcsik/pulcsi13.jpg'),
-(14, 15000, 'M', 'Poliészter', 'Under Armour', 'Fehér', 'Futó pulóver', 'Férfi', './src/assets/pulcsik/pulcsi14.jpg'),
-(15, 16000, 'XL', 'Pamut', 'H&M', 'Kék', 'Kényelmes edző pulóver', 'Női', './src/assets/pulcsik/pulcsi15.jpg'),
-(16, 11000, 'M', 'Pamut', 'Zara', 'Zöld', 'Divatos női pulóver', 'Női', './src/assets/pulcsik/pulcsi16.jpg'),
-(17, 13000, 'L', 'Pamut', 'Mango', 'Fekete', 'Stílusos női pulóver', 'Női', './src/assets/pulcsik/pulcsi17.jpg'),
-(18, 9600, 'S', 'Pamut', 'Nike', 'Fehér', 'Kényelmes női pulóver', 'Női', './src/assets/pulcsik/pulcsi18.jpg'),
-(19, 14500, 'M', 'Poliészter', 'Adidas', 'Piros', 'Futó pulóver női', 'Női', './src/assets/pulcsik/pulcsi19.jpg'),
-(20, 15500, 'XL', 'Pamut', 'Puma', 'Szürke', 'Sportos női pulóver', 'Női', './src/assets/pulcsik/pulcsi20.jpg');
+INSERT INTO `puloverek` (`id`, `ar`, `meret`, `anyag`, `marka`, `szin`, `leiras`, `nem`, `kep_url`) VALUES
+(1, 10000, 'M', 'Pamut', 'Champion', 'Sötétkék', 'Kényelmes pulóver', 'Férfi', './src/assets/puloverek/pulover1.jpg'),
+(2, 12000, 'L', 'Pamut', 'Puma', 'Narancs', 'Sportos pulóver', 'Férfi', './src/assets/puloverek/pulover2.jpg'),
+(3, 9000, 'S', 'Pamut', 'Adidas', 'Szürke', 'Klasszikus pulóver', 'Férfi', './src/assets/puloverek/pulover3.jpg'),
+(4, 15000, 'M', 'Poliészter', 'New Balance', 'Kék', 'Futó pulóver', 'Férfi', './src/assets/puloverek/pulover4.jpg'),
+(5, 16000, 'XL', 'Pamut', 'H&M', 'Fekete', 'Kényelmes edző pulóver', 'Férfi', './src/assets/puloverek/pulover5.jpg'),
+(6, 11000, 'M', 'Pamut', 'Zara', 'Zöld', 'Divatos pulóver', 'Férfi', './src/assets/puloverek/pulover6.jpg'),
+(7, 13000, 'L', 'Pamut', 'Mango', 'Bordó', 'Stílusos pulóver', 'Férfi', './src/assets/puloverek/pulover7.jpg'),
+(8, 9600, 'S', 'Pamut', 'Nike', 'Rózsaszín', 'Kényelmes női pulóver', 'Női', './src/assets/puloverek/pulover8.jpg'),
+(9, 14500, 'M', 'Poliészter', 'Adidas', 'Fehér', 'Futó pulóver női', 'Női', './src/assets/puloverek/pulover9.jpg'),
+(10, 15500, 'XL', 'Pamut', 'Reebok', 'Kék', 'Sportos női pulóver', 'Női', './src/assets/puloverek/pulover10.jpg'),
+(11, 10000, 'M', 'Pamut', 'Levi\'s', 'Szürke', 'Klasszikus farmer pulóver', 'Férfi', './src/assets/puloverek/pulover11.jpg'),
+(12, 12000, 'L', 'Pamut', 'Tommy Hilfiger', 'Piros', 'Elegáns pulóver', 'Férfi', './src/assets/puloverek/pulover12.jpg'),
+(13, 9000, 'S', 'Pamut', 'Calvin Klein', 'Fekete', 'Minimalista pulóver', 'Férfi', './src/assets/puloverek/pulover13.jpg'),
+(14, 15000, 'M', 'Poliészter', 'Under Armour', 'Fehér', 'Futó pulóver', 'Férfi', './src/assets/puloverek/pulover14.jpg'),
+(15, 16000, 'XL', 'Pamut', 'H&M', 'Kék', 'Kényelmes edző pulóver', 'Női', './src/assets/puloverek/pulover15.jpg'),
+(16, 11000, 'M', 'Pamut', 'Zara', 'Zöld', 'Divatos női pulóver', 'Női', './src/assets/puloverek/pulover16.jpg'),
+(17, 13000, 'L', 'Pamut', 'Mango', 'Fekete', 'Stílusos női pulóver', 'Női', './src/assets/puloverek/pulover17.jpg'),
+(18, 9600, 'S', 'Pamut', 'Nike', 'Fehér', 'Kényelmes női pulóver', 'Női', './src/assets/puloverek/pulover18.jpg'),
+(19, 14500, 'M', 'Poliészter', 'Adidas', 'Piros', 'Futó pulóver női', 'Női', './src/assets/puloverek/pulover19.jpg'),
+(20, 15500, 'XL', 'Pamut', 'Puma', 'Szürke', 'Sportos női pulóver', 'Női', './src/assets/puloverek/pulover20.jpg');
 
 -- --------------------------------------------------------
 
@@ -333,9 +333,9 @@ ALTER TABLE `polok`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `pulcsik`
+-- A tábla indexei `puloverek`
 --
-ALTER TABLE `pulcsik`
+ALTER TABLE `puloverek`
   ADD PRIMARY KEY (`id`);
 
 --
