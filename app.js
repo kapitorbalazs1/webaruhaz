@@ -43,9 +43,9 @@ router.use('/api', rendelesUtvonalak);
 
 router.get('/api/ruhak', async (keres, valasz) => {
   try {
-    const [polok, pulcsik, ingek, kabatok, nadragok] = await Promise.all([
+    const [polok, puloverek, ingek, kabatok, nadragok] = await Promise.all([
       adatbazis.query('SELECT * FROM polok', { type: Sequelize.QueryTypes.SELECT }),
-      adatbazis.query('SELECT * FROM pulcsik', { type: Sequelize.QueryTypes.SELECT }),
+      adatbazis.query('SELECT * FROM puloverek', { type: Sequelize.QueryTypes.SELECT }),
       adatbazis.query('SELECT * FROM ingek', { type: Sequelize.QueryTypes.SELECT }),
       adatbazis.query('SELECT * FROM kabatok', { type: Sequelize.QueryTypes.SELECT }),
       adatbazis.query('SELECT * FROM nadragok', { type: Sequelize.QueryTypes.SELECT })
@@ -53,7 +53,7 @@ router.get('/api/ruhak', async (keres, valasz) => {
 
     const ruhakLista = {
       Polok: polok,
-      Pulcsik: pulcsik,
+      Puloverek: puloverek,
       Ingek: ingek,
       Kabatok: kabatok,
       Nadragok: nadragok
