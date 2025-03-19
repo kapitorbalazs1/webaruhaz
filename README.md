@@ -1,27 +1,88 @@
-# WebaruhazFrontend
+Szent István Katolikus Technikum és Gimnázium
+![image](https://github.com/user-attachments/assets/fb6b942b-a5ee-404b-8478-f111a048c3f5)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.15.
+Projekt címe: Ruházati Webáruház
 
-## Development server
+## Projekt csapat tagjai 
+- Fridrik István
+- Kapitor Balázs  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Projekt leírása
+A „DivatPalota” egy modern, felhasználóbarát ruházati webáruház, amely a vásárlók egyéni stílusának és igényeinek kiszolgálására fókuszál. Célja egy letisztult, könnyen kezelhető platform létrehozása, amely mérettáblázattal és szűrési lehetőségekkel segíti a megfelelő ruhadarabok kiválasztását, csökkentve a visszaküldési arányt. A rendszer regisztrációhoz kötött vásárlást kínál, de a böngészés nem regisztrált felhasználók számára is elérhető.
 
-## Code scaffolding
+## Rendszerkövetelmények
+## Minimális gépigény
+- Processzor: 1,5 GHz, kétmagos (pl. Intel Core i3 vagy hasonló)
+- Memória: 4 GB RAM
+- Tárhely: 500 MB szabad hely
+- Internetkapcsolat: 5 Mbps
+- Operációs rendszer: Windows 10 (64-bit), macOS 10.14, Ubuntu 18.04 vagy újabb
+- Böngésző: Google Chrome 90, Firefox 88, Edge 90, Safari 14 vagy újabb
+- Kijelző: 1024x768 felbontás
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Ajánlott gépigény
+- Processzor: 2,5 GHz, négymagos (pl. Intel Core i5/i7 vagy AMD Ryzen)
+- Memória: 8 GB RAM
+- Tárhely: 1 GB szabad hely
+- Internetkapcsolat: 20 Mbps
+- Operációs rendszer: Windows 11 (64-bit), macOS 12, Ubuntu 20.04 vagy újabb
+- Böngésző: Google Chrome 100, Firefox 95, Edge 100, Safari 15 vagy újabb
+- Kijelző: 1920x1080 (Full HD)
 
-## Build
+## Fejlesztéshez használt szoftverek
+- Node.js: 18.x (LTS) - Backend futtatási környezet
+- Angular CLI: 16.2.x - Frontend fejlesztés és build
+- XAMPP: 8.2.x (MySQL 8.0.x, Apache 2.4.x) - Adatbázis és szerver
+- Visual Studio Code: 1.85.x - Kódszerkesztő
+- Git: 2.43.x - Verziókezelés
+- MariaDB: 10.4.32 - Adatbázis-kezelő
+- phpMyAdmin: 5.2.1 - Adatbázis adminisztráció
+- Jest: 29.x - Backend tesztelés
+- Jasmine: 4.6.x és Karma: 6.4.x - Frontend tesztelés
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Üzembehelyezés menete fejlesztéshez
+1. Szükséges szoftverek telepítése:
+   - Telepítse a Node.js-t (18.x) és az npm-et: [nodejs.org](https://nodejs.org)
+   - Telepítse az Angular CLI-t globálisan: `npm install -g @angular/cli@16.2.x`
+   - Telepítse a XAMPP-ot: [apachefriends.org](https://www.apachefriends.org)
+   - Telepítse a Git-et (opcionális): [git-scm.com](https://git-scm.com)
 
-## Running unit tests
+2. Forráskód beszerzése:
+   - Klónozza a repository-kat:
+     `git clone https://github.com/kapitorbalazs1/webaruhaz.git -b webaruhaz_frontend`
+     `git clone https://github.com/kapitorbalazs1/webaruhaz.git -b webaruhaz_backend`
+   - Vagy töltse le ZIP formátumban és bontsa ki külön mappákba.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3. Adatbázis beállítása:
+   - Indítsa el a XAMPP-ot, aktiválja az Apache és MySQL modulokat.
+   - Nyissa meg a `http://localhost/phpmyadmin` oldalt.
+   - Hozzon létre egy új adatbázist: `webaruhaz`.
+   - Importálja a `webaruhaz.sql` fájlt az "Import" fülön keresztül.
 
-## Running end-to-end tests
+4. Backend telepítése:
+   - Lépjen a backend mappába:
+     `cd webaruhaz_backend`
+   - Telepítse a függőségeket:
+     `npm install`
+   - Ellenőrizze/állítsa be a `.env` fájlt:
+     `DB_HOST=localhost
+     DB_USER=root
+     DB_PASSWORD=""
+     DB_NAME=webaruhaz
+     PORT=3000`
+   - Indítsa el a szervert:
+     `npm start`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+5. Frontend telepítése:
+   - Lépjen a frontend mappába:
+     `cd webaruhaz_frontend`
+   - Telepítse a függőségeket:
+     `npm install`
+   - Indítsa el az Angular szervert:
+     `ng serve`
 
-## Further help
+6. Ellenőrzés:
+   - Nyissa meg a böngészőt, és navigáljon a `http://localhost:4200` címre.
+   - Ha a főoldal betölt, a telepítés sikeres.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Megjegyzés: Ha a portok (3000 vagy 4200) foglaltak, módosítsa a `.env` fájlban a `PORT`-ot, illetve használja az `ng serve --port <új_port>` parancsot. Éles környezetben buildelje a frontendet (`ng build --prod`) és másolja a `dist/` mappát egy webszerverre.
