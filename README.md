@@ -1,5 +1,5 @@
-Szent István Katolikus Technikum és Gimnázium
 ![image](https://github.com/user-attachments/assets/fb6b942b-a5ee-404b-8478-f111a048c3f5)
+Szent István Katolikus Technikum és Gimnázium
 
 Projekt címe: Ruházati Webáruház
 
@@ -10,7 +10,7 @@ Projekt címe: Ruházati Webáruház
 ## Projekt leírása
 A „DivatPalota” egy modern, felhasználóbarát ruházati webáruház, amely a vásárlók egyéni stílusának és igényeinek kiszolgálására fókuszál. Célja egy letisztult, könnyen kezelhető platform létrehozása, amely mérettáblázattal és szűrési lehetőségekkel segíti a megfelelő ruhadarabok kiválasztását, csökkentve a visszaküldési arányt. A rendszer regisztrációhoz kötött vásárlást kínál, de a böngészés nem regisztrált felhasználók számára is elérhető.
 
-## Rendszerkövetelmények
+# Rendszerkövetelmények
 ## Minimális gépigény
 - Processzor: 1,5 GHz, kétmagos (pl. Intel Core i3 vagy hasonló)
 - Memória: 4 GB RAM
