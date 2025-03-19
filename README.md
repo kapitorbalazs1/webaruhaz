@@ -1,2 +1,2 @@
 # webaruhaz
-Szakmai vizsga projekt
+Szakmai vizsga backend része
