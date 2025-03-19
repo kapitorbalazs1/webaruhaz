@@ -1,6 +1,7 @@
 ![image](https://github.com/user-attachments/assets/fb6b942b-a5ee-404b-8478-f111a048c3f5)
 
 Szent István Katolikus Technikum és Gimnázium
+
 Projekt címe: Ruházati Webáruház
 
 ## Projekt csapat tagjai 
