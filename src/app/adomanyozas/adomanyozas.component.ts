@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adomanyozas',
@@ -14,7 +15,7 @@ export class AdomanyozasComponent {
   masolGombSzoveg: string = 'Másolás';
   tooltipMegjelenites: boolean = false;
 
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
     const mentettKupon = localStorage.getItem('kuponKod');
     if (mentettKupon) {
       const kuponAdatok = JSON.parse(mentettKupon);
@@ -29,39 +30,53 @@ export class AdomanyozasComponent {
 
     if (!osszeg || !email) {
       this.hibaUzenet = 'A *-gal jelölt mezők kitöltése kötelező';
+      this.openSnackBar(this.hibaUzenet, 'Bezárás');
       return;
     }
 
     if (osszeg < 100) {
       this.hibaUzenet = 'Az összegnek legalább 100 HUF-nak kell lennie!';
+      this.openSnackBar(this.hibaUzenet, 'Bezárás');
       return;
     }
 
     if (!this.emailHitelesites(email)) {
       this.hibaUzenet = 'Kérjük, érvényes e-mail címet adjon meg!';
+      this.openSnackBar(this.hibaUzenet, 'Bezárás');
       return;
     }
 
-    console.log(`Adomány ${osszeg} HUF érkezett ${email} címről`);
+    try {
+      console.log(`Adomány ${osszeg} HUF érkezett ${email} címről`);
 
-    // Kedvezmény kiszámítása a beírt összeg alapján
-    if (osszeg >= 10000) {
-      this.kedvezmeny = 25;
-    } else if (osszeg >= 1000) {
-      this.kedvezmeny = 10;
-    } else {
-      this.kedvezmeny = 1;
+      // Kedvezmény kiszámítása a beírt összeg alapján
+      if (osszeg >= 10000) {
+        this.kedvezmeny = 25;
+      } else if (osszeg >= 1000) {
+        this.kedvezmeny = 10;
+      } else {
+        this.kedvezmeny = 1;
+      }
+
+      this.kuponKod = this.kuponKodGeneralas();
+      this.kuponMegjelenites = true;
+      this.hibaUzenet = '';
+
+      const kuponAdatok = {
+        kod: this.kuponKod,
+        kedvezmeny: this.kedvezmeny
+      };
+      localStorage.setItem('kuponKod', JSON.stringify(kuponAdatok));
+
+      // Siker üzenet
+      this.openSnackBar('Sikeres kupon generálás!', 'Bezárás');
+    } catch (error) {
+      console.error('Hiba történt a kupon generálása során:', error);
+
+      // Hibaüzenet
+      this.hibaUzenet = 'Sikertelen kupon generálás!';
+      this.openSnackBar(this.hibaUzenet, 'Bezárás');
     }
-
-    this.kuponKod = this.kuponKodGeneralas();
-    this.kuponMegjelenites = true;
-    this.hibaUzenet = '';
-
-    const kuponAdatok = {
-      kod: this.kuponKod,
-      kedvezmeny: this.kedvezmeny
-    };
-    localStorage.setItem('kuponKod', JSON.stringify(kuponAdatok));
   }
 
   public kuponKodGeneralas(): string {
@@ -87,6 +102,15 @@ export class AdomanyozasComponent {
       }, 2000);
     }).catch(err => {
       console.error('Hiba történt a kuponkód másolása közben:', err);
+    });
+  }
+
+  // Értesítés megjelenítése
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
     });
   }
 }
