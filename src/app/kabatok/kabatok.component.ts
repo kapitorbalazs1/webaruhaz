@@ -31,7 +31,7 @@ export class KabatokComponent implements OnInit {
 
   private idozitoId: any = null;
 
-  kivalasztottRendezes: string = 'alap'; // Default sorting option
+  kivalasztottRendezes: string = 'alap';
 
   constructor(
     private ruhaSzolgaltatas: ClothingService, 
