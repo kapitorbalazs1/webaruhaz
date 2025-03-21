@@ -3,6 +3,7 @@ import { ClothingService } from '../clothing.service';
 import { CartService } from '../cart.service';
 import { AuthService } from '../auth.service';
 import { firstValueFrom } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ingek',
@@ -37,6 +38,7 @@ export class IngekComponent implements OnInit {
     private ruhaSzolgaltatas: ClothingService, 
     private kosarSzolgaltatas: CartService,
     private authSzolgaltatas: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +54,7 @@ export class IngekComponent implements OnInit {
       if (adatok.Ingek && Array.isArray(adatok.Ingek)) {
         this.ingekLista = adatok.Ingek.map((ing: any) => ({
           ...ing,
-          id: `${ing.id}_pulcsi`,
+          id: `${ing.id}_ing`,
           kep_url: ing.kep_url.replace('src/', '')
         }));
 
@@ -67,10 +69,10 @@ export class IngekComponent implements OnInit {
         this.maxAr = Math.max(...this.ingekLista.map(ing => ing.ar));
         this.kivalasztottAr = this.maxAr;
       } else {
-        console.error('Nincsenek elérhető pólók:', adatok);
+        console.error('Nincsenek elérhető ingek:', adatok);
       }
     } catch (hiba) {
-      console.error('Hiba történt a pólók lekérésekor:', hiba);
+      console.error('Hiba történt az ingek lekérésekor:', hiba);
     } finally {
       this.betoltesFolyamatban = false;
     }
@@ -157,9 +159,23 @@ export class IngekComponent implements OnInit {
 
   kosarhozAd(ing: any): void {
     if (this.bejelentkezve) {
-      this.kosarSzolgaltatas.kosarhozAd(ing);
+      try {
+        this.kosarSzolgaltatas.kosarhozAd(ing);
+        this.snackBar.open('Sikeresen hozzáadva a kosárhoz!', 'OK', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      } catch (error) {
+        this.snackBar.open('Hiba történt a kosárhoz adáskor!', 'OK', {
+          duration: 3000,
+        });
+        console.error('Error adding to cart:', error);
+      }
     } else {
-      window.alert('Kérjük, jelentkezzen be a vásárláshoz!');
+      this.snackBar.open('Kérjük, jelentkezzen be a vásárláshoz!', 'OK', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
     }
   }
 
