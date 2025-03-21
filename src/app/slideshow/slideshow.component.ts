@@ -27,7 +27,7 @@ export class SlideshowComponent implements OnInit, OnDestroy {
   private automatikusLapozasIndit(): void {
     if (this.autoLapozasEngedelyezve && this.idozitoId === null) {
       this.idozitoId = setInterval(() => {
-        this.kovetkezoDia();
+        this.kovetkezoDia(true);
       }, this.lapozasiIdo);
     }
   }
@@ -39,14 +39,20 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     }
   }
 
-  kovetkezoDia(): void {
+  kovetkezoDia(automatikus: boolean = false): void {
     if (this.diak.length === 0) {
       console.warn('Nincsenek diák betöltve!');
       return;
     }
+    
     this.jelenlegiDia++;
     if (this.jelenlegiDia >= this.diak.length) {
       this.jelenlegiDia = 0;
+    }
+    
+    if (!automatikus) {
+      this.automatikusLapozasLeallit();
+      this.automatikusLapozasIndit();
     }
   }
 
@@ -55,10 +61,14 @@ export class SlideshowComponent implements OnInit, OnDestroy {
       console.warn('Nincsenek diák betöltve!');
       return;
     }
+    
     this.jelenlegiDia--;
     if (this.jelenlegiDia < 0) {
       this.jelenlegiDia = this.diak.length - 1;
     }
+    
+    this.automatikusLapozasLeallit();
+    this.automatikusLapozasIndit();
   }
 
   lapozasiSebessegModositas(ujIdo: number): void {
