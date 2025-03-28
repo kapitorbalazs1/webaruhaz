@@ -11,6 +11,9 @@ Projekt címe: Ruházati Webáruház
 ## Projekt leírása
 A „DivatPalota” egy modern, felhasználóbarát ruházati webáruház, amely a vásárlók egyéni stílusának és igényeinek kiszolgálására fókuszál. Célja egy letisztult, könnyen kezelhető platform létrehozása, amely mérettáblázattal és szűrési lehetőségekkel segíti a megfelelő ruhadarabok kiválasztását, csökkentve a visszaküldési arányt. A rendszer regisztrációhoz kötött vásárlást kínál, de a böngészés nem regisztrált felhasználók számára is elérhető.
 
+## Forráskód elérthetősége
+A frontend forráskódja a `webaruhaz_frontend` branch-ben, a backend forráskódja a `webaruhaz_backend` branch-ben található.
+
 # Rendszerkövetelmények
 ## Minimális gépigény
 - Processzor: 1,5 GHz, kétmagos (pl. Intel Core i3 vagy hasonló)
